@@ -178,10 +178,11 @@ export class PalGateApi implements ICredentialType {
 					expiry: now + 23 * 60 * 60 * 1000, // 23 hours in milliseconds
 				};
 			} else {
-				// No token available - preAuthentication should have been called
-				// This means credentials were not properly initialized
+				// No token available - this means preAuthentication was not called or failed
+				// We cannot perform login here because authenticate function doesn't have access to httpRequest
+				// The user needs to save credentials again to trigger preAuthentication
 				throw new Error(
-					'Authentication token not found. Please check your credentials and try saving them again. The preAuthentication hook should have populated the token.',
+					'Authentication token not found. Please save your credentials again to trigger authentication. If the problem persists, please check your username and password.',
 				);
 			}
 		}
