@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-palgate",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "n8n community node for PAL Portal API - manage users, cars, places, devices, and organizations",
 	"license": "MIT",
 	"homepage": "https://github.com/pal-es/n8n-nodes-palgate",
@@ -25,10 +25,7 @@
 		"dev": "n8n-node dev",
 		"lint": "n8n-node lint",
 		"lint:fix": "n8n-node lint --fix",
-		"release": "n8n-node release",
-		"prepublishOnly": "n8n-node prerelease",
-		"prepublishOnly": "n8n-node prerelease",
-		"prepublishOnly": "n8n-node prerelease"
+		"release": "n8n-node release"
 	},
 	"files": [
 		"dist"
