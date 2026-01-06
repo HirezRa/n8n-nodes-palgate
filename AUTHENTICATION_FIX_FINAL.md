@@ -13,8 +13,8 @@
 
 **Credentials שנוסו:**
 - URL: `https://portal.pal-es.com`
-- Username: `avi_bm@mer-group.com`
-- Password: `Pa63G@k5@(~s9`
+- Username: `[REDACTED]`
+- Password: `[REDACTED]`
 
 **שגיאה שהתקבלה:**
 ```
