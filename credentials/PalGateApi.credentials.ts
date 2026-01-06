@@ -178,12 +178,66 @@ export class PalGateApi implements ICredentialType {
 					expiry: now + 23 * 60 * 60 * 1000, // 23 hours in milliseconds
 				};
 			} else {
-				// No token available - this means preAuthentication was not called or failed
-				// We cannot perform login here because authenticate function doesn't have access to httpRequest
-				// The user needs to save credentials again to trigger preAuthentication
-				throw new Error(
-					'Authentication token not found. Please save your credentials again to trigger authentication. If the problem persists, please check your username and password.',
-				);
+				// No token available - perform login directly using fetch API
+				// This is needed because preAuthentication might not have been called
+				// or the token might have expired
+				try {
+					const loginUrl = 'https://portal.pal-es.com/api1/user/login1';
+					const loginPayload = {
+						username,
+						password,
+					};
+
+					const response = await (globalThis as any).fetch(loginUrl, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(loginPayload),
+					});
+
+					if (!response.ok) {
+						const errorText = await response.text();
+						throw new Error(
+							`PAL Portal authentication failed: ${response.status} ${response.statusText} - ${errorText}`,
+						);
+					}
+
+					const loginResponse = await response.json();
+
+					// Extract token from response
+					if (
+						loginResponse &&
+						loginResponse.user &&
+						loginResponse.user.token
+					) {
+						token = loginResponse.user.token;
+
+						// Cache token for 23 hours (token expires in 24 hours)
+						tokenCache[cacheKey] = {
+							token,
+							expiry: now + 23 * 60 * 60 * 1000, // 23 hours in milliseconds
+						};
+					} else {
+						throw new Error(
+							'Invalid login response: token not found in response. Response structure: ' +
+								JSON.stringify(loginResponse),
+						);
+					}
+				} catch (error: unknown) {
+					// Clear cache on error
+					delete tokenCache[cacheKey];
+
+					const errorObj = error as {
+						message?: string;
+					};
+
+					const errorMessage = errorObj.message || 'Login failed: Unknown error';
+
+					throw new Error(
+						`PAL Portal authentication failed: ${errorMessage}. Please check your username and password.`,
+					);
+				}
 			}
 		}
 
