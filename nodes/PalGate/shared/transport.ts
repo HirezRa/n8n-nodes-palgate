@@ -13,7 +13,7 @@ const tokenCache: {
 	[key: string]: { token: string; expiry: number };
 } = {};
 
-async function getAuthToken(
+export async function getAuthToken(
 	this: IHookFunctions | IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions,
 ): Promise<string> {
 	// Get credentials
