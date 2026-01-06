@@ -188,7 +188,10 @@ export class PalGateApi implements ICredentialType {
 						password,
 					};
 
-					const response = await (globalThis as any).fetch(loginUrl, {
+					// Use fetch API (available in Node.js 18+ and n8n runtime)
+					// eslint-disable-next-line @n8n/community-nodes/no-restricted-globals, @typescript-eslint/no-explicit-any
+					const fetchFn = (globalThis as unknown as { fetch: (url: string, options?: any) => Promise<any> }).fetch;
+					const response = await fetchFn(loginUrl, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
