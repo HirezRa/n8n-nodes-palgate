@@ -40,17 +40,15 @@ export class PalGateApi implements ICredentialType {
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
-			auth: {
-				username: '={{$credentials.username}}',
-				password: '={{$credentials.password}}',
-			},
+			// Authentication is handled in transport.ts via login
+			// This is a placeholder - actual auth happens in palGateApiRequest
 		},
 	};
 
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: 'https://portal.pal-es.com/api1',
-			url: '/check-token',
+			url: '/user/checkToken',
 			method: 'GET',
 		},
 	};
