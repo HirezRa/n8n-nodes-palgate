@@ -6,11 +6,6 @@ import { deviceDescription } from './resources/devices';
 import { organizationDescription } from './resources/organizations';
 import { dashboardDescription } from './resources/dashboard';
 
-
-
-
-
-
 export class PalGate implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'PAL Gate',
@@ -82,4 +77,3 @@ export class PalGate implements INodeType {
 		],
 	};
 }
-
