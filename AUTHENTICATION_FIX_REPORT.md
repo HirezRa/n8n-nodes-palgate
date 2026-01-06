@@ -12,8 +12,8 @@
 שרת n8n לא הצליח להתחבר ל-PAL Portal API (`portal.pal-es.com`) למרות ש-credentials היו נכונים.
 
 **Credentials שנוסו:**
-- Username: `REDACTED_EMAIL`
-- Password: `REDACTED_PASSWORD`
+- Username: `[REDACTED]`
+- Password: `[REDACTED]`
 
 **שגיאה שהתקבלה:**
 ```
@@ -168,8 +168,8 @@ npm run lint
 ```
 
 ### Test Credentials
-- ✅ Username: `REDACTED_EMAIL`
-- ✅ Password: `REDACTED_PASSWORD`
+- ✅ Username: `[REDACTED]`
+- ✅ Password: `[REDACTED]`
 - ✅ Expected: Login מוצלח ו-token מתקבל
 
 ---
@@ -182,8 +182,8 @@ npm run lint
 2. עבור ל-**Credentials** → **Add Credential**
 3. בחר **PAL Gate API**
 4. הזן:
-   - **Username:** `REDACTED_EMAIL`
-   - **Password:** `REDACTED_PASSWORD`
+   - **Username:** `[REDACTED]`
+   - **Password:** `[REDACTED]`
 5. לחץ **Test** (אמור לעבוד עכשיו)
 6. שמור
 

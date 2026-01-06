@@ -13,8 +13,8 @@
 
 **Credentials שנוסו:**
 - URL: `https://portal.pal-es.com`
-- Username: `REDACTED_EMAIL`
-- Password: `REDACTED_PASSWORD`
+- Username: `[REDACTED]`
+- Password: `[REDACTED]`
 
 **שגיאה שהתקבלה:**
 ```
