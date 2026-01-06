@@ -47,10 +47,12 @@ export class PalGateApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://portal.pal-es.com/api1',
-			url: '/user/checkToken',
-			method: 'GET',
+			method: 'POST',
+			url: 'https://portal.pal-es.com/api1/user/login1',
+			body: {
+				username: '={{$credentials.username}}',
+				password: '={{$credentials.password}}',
+			},
 		},
 	};
 }
-
