@@ -53,6 +53,10 @@ export class PalGateApi implements ICredentialType {
 		const username = credentials.username as string;
 		const password = credentials.password as string;
 
+		if (!username || !password) {
+			throw new Error('Username and password are required');
+		}
+
 		// Create cache key based on username
 		const cacheKey = `pal_gate_${username}`;
 
@@ -142,11 +146,44 @@ export class PalGateApi implements ICredentialType {
 		credentials: ICredentialDataDecryptedObject,
 		requestOptions: IHttpRequestOptions,
 	): Promise<IHttpRequestOptions> => {
-		// Get token from credentials (added by preAuthentication hook)
-		const token = credentials.token as string | undefined;
+		const username = credentials.username as string;
+		const password = credentials.password as string;
 
-		if (!token) {
-			throw new Error('Authentication token not found. Please check your credentials.');
+		if (!username || !password) {
+			throw new Error('Username and password are required');
+		}
+
+		// Create cache key based on username
+		const cacheKey = `pal_gate_${username}`;
+
+		// Check if we have a valid cached token
+		const cached = tokenCache[cacheKey];
+		const now = Date.now();
+
+		let token: string;
+
+		if (cached && cached.expiry > now) {
+			// Use cached token
+			token = cached.token;
+		} else {
+			// Token not in cache or expired
+			// Try to get token from credentials (added by preAuthentication hook)
+			const tokenFromCredentials = credentials.token as string | undefined;
+
+			if (tokenFromCredentials) {
+				token = tokenFromCredentials;
+				// Cache it for future use
+				tokenCache[cacheKey] = {
+					token,
+					expiry: now + 23 * 60 * 60 * 1000, // 23 hours in milliseconds
+				};
+			} else {
+				// No token available - preAuthentication should have been called
+				// This means credentials were not properly initialized
+				throw new Error(
+					'Authentication token not found. Please check your credentials and try saving them again. The preAuthentication hook should have populated the token.',
+				);
+			}
 		}
 
 		// Add token to request headers
