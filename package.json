@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-palgate",
-	"version": "1.0.9",
+	"version": "1.0.11",
 	"description": "n8n community node for PAL Portal API - manage users, cars, places, devices, and organizations",
 	"license": "MIT",
 	"homepage": "https://github.com/pal-es/n8n-nodes-palgate",
@@ -17,7 +17,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/HirezRa/n8n-nodes-palgate.git"
+		"url": "git+https://github.com/HirezRa/n8n-nodes-palgate.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",
