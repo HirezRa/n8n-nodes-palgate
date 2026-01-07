@@ -17,6 +17,21 @@ export const placeGetUsersDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				paginate: '={{ $value }}',
+				type: 'query',
+				property: 'limit',
+				value: '=100',
+			},
+			operations: {
+				pagination: {
+					type: 'offset',
+					properties: {
+						type: 'query',
+						limitParameter: 'limit',
+						offsetParameter: 'skip',
+						pageSize: 100,
+						rootProperty: 'users.list',
+					},
+				},
 			},
 		},
 	},
