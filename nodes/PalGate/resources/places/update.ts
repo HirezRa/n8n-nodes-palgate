@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { placeIdSelect } from '../../shared/descriptions';
 
 const showOnlyForPlaceUpdate = {
 	operation: ['update'],
@@ -7,10 +6,7 @@ const showOnlyForPlaceUpdate = {
 };
 
 export const placeUpdateDescription: INodeProperties[] = [
-	{
-		...placeIdSelect,
-		displayOptions: { show: showOnlyForPlaceUpdate },
-	},
+	// placeIdSelect is defined in index.ts to avoid duplication
 	{
 		displayName: 'Name',
 		name: 'name',

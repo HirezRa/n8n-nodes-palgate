@@ -6,6 +6,8 @@ import { deviceGetLogDescription } from './getLog';
 import { deviceGetUsersDescription } from './getUsers';
 import { deviceAddUsersDescription } from './addUsers';
 import { deviceUpdateSettingsDescription } from './updateSettings';
+import { deviceGetLiveStatusHistoryDescription } from './getLiveStatusHistory';
+import { deviceGetStatusHistoryV2Description } from './getStatusHistoryV2';
 
 const showOnlyForDevices = {
 	resource: ['device'],
@@ -135,4 +137,6 @@ export const deviceDescription: INodeProperties[] = [
 	...deviceGetUsersDescription,
 	...deviceAddUsersDescription,
 	...deviceUpdateSettingsDescription,
+	...deviceGetLiveStatusHistoryDescription,
+	...deviceGetStatusHistoryV2Description,
 ];

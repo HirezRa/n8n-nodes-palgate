@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { serialSelect } from '../../shared/descriptions';
 
 const showOnlyForDeviceUpdateSettings = {
 	operation: ['updateSettings'],
@@ -7,10 +6,7 @@ const showOnlyForDeviceUpdateSettings = {
 };
 
 export const deviceUpdateSettingsDescription: INodeProperties[] = [
-	{
-		...serialSelect,
-		displayOptions: { show: showOnlyForDeviceUpdateSettings },
-	},
+	// serialSelect is defined in index.ts to avoid duplication
 	{
 		displayName: 'Settings',
 		name: 'settings',

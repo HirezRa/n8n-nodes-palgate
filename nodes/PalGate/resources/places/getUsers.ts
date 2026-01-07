@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { placeIdSelect } from '../../shared/descriptions';
 
 const showOnlyForPlaceGetUsers = {
 	operation: ['getUsers'],
@@ -7,10 +6,7 @@ const showOnlyForPlaceGetUsers = {
 };
 
 export const placeGetUsersDescription: INodeProperties[] = [
-	{
-		...placeIdSelect,
-		displayOptions: { show: showOnlyForPlaceGetUsers },
-	},
+	// placeIdSelect is defined in index.ts to avoid duplication
 	{
 		displayName: 'Return All',
 		name: 'returnAll',

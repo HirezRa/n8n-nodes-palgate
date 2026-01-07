@@ -1,5 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { placeIdSelect, phoneSelect } from '../../shared/descriptions';
+import { phoneSelect } from '../../shared/descriptions';
 
 const showOnlyForUserUpdate = {
 	operation: ['update'],
@@ -7,10 +7,7 @@ const showOnlyForUserUpdate = {
 };
 
 export const userUpdateDescription: INodeProperties[] = [
-	{
-		...placeIdSelect,
-		displayOptions: { show: showOnlyForUserUpdate },
-	},
+	// placeIdSelect is defined in index.ts to avoid duplication
 	{
 		...phoneSelect,
 		displayOptions: { show: showOnlyForUserUpdate },
