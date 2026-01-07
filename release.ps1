@@ -314,7 +314,8 @@ if ($versionBump -notmatch '^(major|minor|patch)$') {
 Write-Host "Bumping version: $versionBump"
 
 # Bump version
-npm version $versionBump -m 'chore(release): v%s' --no-git-tag-version
+$versionMsg = 'chore(release): v%s'
+npm version $versionBump -m $versionMsg --no-git-tag-version
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Version bump failed" -ForegroundColor Red
     exit 1
@@ -346,7 +347,7 @@ if (Test-Path "CHANGELOG.md") {
 $commitMessage = 'chore(release): v' + $newVersion
 git commit -m $commitMessage
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "WARNING: Nothing to commit (version may already be bumped)" -ForegroundColor Yellow
+        Write-Host 'WARNING: Nothing to commit - version may already be bumped' -ForegroundColor Yellow
 }
 
 Write-Host "✓ Versioning complete" -ForegroundColor Green
