@@ -1,7 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { dashboardGetFavoritesDescription } from './getFavorites';
 import { dashboardGetRecentDescription } from './getRecent';
-import { dashboardUpdateRecentDescription } from './updateRecent';
 import { dashboardGetStatisticsDescription } from './getStatistics';
 import { dashboardGetDevicesMarkersDescription } from './getDevicesMarkers';
 
@@ -67,24 +66,11 @@ export const dashboardDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Update Recent',
-				value: 'updateRecent',
-				action: 'Update recent devices and places',
-				description: 'Update recent devices and places',
-				routing: {
-					request: {
-						method: 'PUT',
-						url: '=/user/admin/recent-devices-places',
-					},
-				},
-			},
 		],
 		default: 'getFavorites',
 	},
 	...dashboardGetFavoritesDescription,
 	...dashboardGetRecentDescription,
-	...dashboardUpdateRecentDescription,
 	...dashboardGetStatisticsDescription,
 	...dashboardGetDevicesMarkersDescription,
 ];

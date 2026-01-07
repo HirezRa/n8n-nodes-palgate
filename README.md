@@ -35,7 +35,6 @@ npm install n8n-nodes-palgate
 - **Delete**: Delete a user from a place
 - **Get Many**: Get all app users (mobile users)
 - **Get Portal Users**: Get web users (portal users)
-- **Get Image**: Get user profile image
 
 ### Car Management
 - **Add**: Add a car to a user
@@ -44,13 +43,10 @@ npm install n8n-nodes-palgate
 - **Search In Logs**: Search for a car in logs
 
 ### Place Management
-- **Get Many**: Get list of places with pagination
 - **Get Tree**: Get hierarchical tree of places
 - **Get Details**: Get details of a specific place
-- **Update**: Update place information
 - **Get Groups**: Get groups for a place
 - **Get Users**: Get users in a place with filtering
-- **Format Phone Number**: Format phone number according to place settings
 
 ### Device Management
 - **Get Many**: Get list of devices with filtering
@@ -59,8 +55,6 @@ npm install n8n-nodes-palgate
 - **Get Live Status History**: Get live status history for a device
 - **Get Status History V2**: Get extended status history for a device
 - **Get Users**: Get users who recently passed through a device
-- **Add Users**: Add users to a device
-- **Update Settings**: Update device settings
 
 ### Organization Management
 - **Get Tree**: Get hierarchical tree of organizations
@@ -69,7 +63,6 @@ npm install n8n-nodes-palgate
 ### Dashboard
 - **Get Favorites**: Get admin user favorites (devices and places)
 - **Get Recent**: Get recent devices and places viewed by admin user
-- **Update Recent**: Update recent devices and places for admin user
 - **Get Statistics**: Get dashboard statistics (devices count, places count, users count)
 - **Get Devices Markers**: Get device markers for map display (geographic coordinates)
 
@@ -77,7 +70,7 @@ npm install n8n-nodes-palgate
 
 This package provides comprehensive access to the PAL Portal API. Below is a complete list of all supported API functions organized by resource category:
 
-### 👥 User Management (9 operations)
+### 👥 User Management (8 operations)
 
 | Operation | Method | Endpoint | Description |
 |-----------|--------|----------|-------------|
@@ -89,7 +82,6 @@ This package provides comprehensive access to the PAL Portal API. Below is a com
 | Delete | POST | `/place/{placeId}/delete-many-users` | Delete a user from a place |
 | Get Many | GET | `/app-user/all-users` | Get all app users (mobile users) |
 | Get Portal Users | GET | `/users` | Get web users (portal users) |
-| Get Image | GET | `/app-user/{phone}/image` | Get user profile image |
 
 ### 🚗 Car Management (4 operations)
 
@@ -100,19 +92,16 @@ This package provides comprehensive access to the PAL Portal API. Below is a com
 | Delete By ID | DELETE | `/place/{placeId}/user/{phone}/car/{carId}` | Delete a car from a user using DELETE method |
 | Search In Logs | GET | `/place/{placeId}/reports/car` | Search for a car in logs |
 
-### 🏢 Place Management (7 operations)
+### 🏢 Place Management (4 operations)
 
 | Operation | Method | Endpoint | Description |
 |-----------|--------|----------|-------------|
-| Get Many | GET | `/place` | Get list of places with pagination |
 | Get Tree | GET | `/places-tree` | Get hierarchical tree of places |
 | Get Details | GET | `/place/{placeId}` | Get details of a specific place |
-| Update | POST | `/place/{placeId}/general/edit` | Update place information |
 | Get Groups | GET | `/place/{placeId}/groups` | Get groups for a place |
 | Get Users | GET | `/place/{placeId}/users` | Get users in a place with filtering |
-| Format Phone Number | GET | `/place/{placeId}/format-number` | Format phone number according to place settings |
 
-### 🖥️ Device Management (8 operations)
+### 🖥️ Device Management (6 operations)
 
 | Operation | Method | Endpoint | Description |
 |-----------|--------|----------|-------------|
@@ -122,8 +111,6 @@ This package provides comprehensive access to the PAL Portal API. Below is a com
 | Get Live Status History | GET | `/device/{serial}/live-status-history` | Get live status history for a device |
 | Get Status History V2 | GET | `/device/{serial}/get-status-historyV2` | Get extended status history for a device |
 | Get Users | GET | `/device/{serial}/users` | Get users who recently passed through a device |
-| Add Users | POST | `/device/{serial}/users` | Add users to a device |
-| Update Settings | POST | `/device/{serial}/settings` | Update device settings |
 
 ### 🏛️ Organization Management (2 operations)
 
@@ -132,19 +119,18 @@ This package provides comprehensive access to the PAL Portal API. Below is a com
 | Get Tree | GET | `/orgs-tree` | Get hierarchical tree of organizations |
 | Get Details | GET | `/org/{orgId}` | Get details of a specific organization |
 
-### 📊 Dashboard (5 operations)
+### 📊 Dashboard (4 operations)
 
 | Operation | Method | Endpoint | Description |
 |-----------|--------|----------|-------------|
 | Get Favorites | GET | `/user/admin/favorites` | Get admin user favorites (devices and places) |
 | Get Recent | GET | `/user/admin/recent-devices-places` | Get recent devices and places viewed by admin user |
-| Update Recent | PUT | `/user/admin/recent-devices-places` | Update recent devices and places for admin user |
 | Get Statistics | GET | `/user/dashboard/statistics` | Get dashboard statistics (devices count, places count, users count) |
 | Get Devices Markers | GET | `/devices-markers` | Get device markers for map display (geographic coordinates) |
 
 ### Summary
 
-- **Total Operations**: 35 API operations
+- **Total Operations**: 28 API operations
 - **Resources**: 6 categories (User, Car, Place, Device, Organization, Dashboard)
 - **HTTP Methods**: GET, POST, PUT, DELETE
 - **Base URL**: `https://portal.pal-es.com/api1`
