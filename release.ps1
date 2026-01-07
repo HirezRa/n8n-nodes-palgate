@@ -305,7 +305,7 @@ Write-Host "====================================================" -ForegroundCol
 
 # Determine version bump type (default: patch)
 $versionBump = if ($args.Count -gt 0) { $args[0] } else { "patch" }
-if ($versionBump -notmatch "^(major|minor|patch)$") {
+if ($versionBump -notmatch '^(major|minor|patch)$') {
     Write-Host "ERROR: Invalid version bump type: $versionBump" -ForegroundColor Red
     Write-Host "Must be: major, minor, or patch"
     exit 1
@@ -314,7 +314,7 @@ if ($versionBump -notmatch "^(major|minor|patch)$") {
 Write-Host "Bumping version: $versionBump"
 
 # Bump version
-npm version $versionBump -m "chore(release): v%s" --no-git-tag-version
+npm version $versionBump -m 'chore(release): v%s' --no-git-tag-version
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Version bump failed" -ForegroundColor Red
     exit 1
@@ -343,7 +343,8 @@ git add package.json package-lock.json
 if (Test-Path "CHANGELOG.md") {
     git add CHANGELOG.md
 }
-git commit -m "chore(release): v$newVersion"
+$commitMessage = "chore(release): v$newVersion"
+git commit -m $commitMessage
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARNING: Nothing to commit (version may already be bumped)" -ForegroundColor Yellow
 }
