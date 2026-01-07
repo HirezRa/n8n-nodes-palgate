@@ -1,5 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { placeIdSelect, phoneSelect } from '../../shared/descriptions';
+import { phoneSelect } from '../../shared/descriptions';
 
 const showOnlyForCarDeleteById = {
 	operation: ['deleteById'],
@@ -7,10 +7,7 @@ const showOnlyForCarDeleteById = {
 };
 
 export const carDeleteByIdDescription: INodeProperties[] = [
-	{
-		...placeIdSelect,
-		displayOptions: { show: showOnlyForCarDeleteById },
-	},
+	// placeIdSelect is defined in index.ts to avoid duplication
 	{
 		...phoneSelect,
 		displayOptions: { show: showOnlyForCarDeleteById },

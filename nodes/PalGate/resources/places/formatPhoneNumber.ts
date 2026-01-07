@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { placeIdSelect } from '../../shared/descriptions';
 
 const showOnlyForPlaceFormatPhoneNumber = {
 	operation: ['formatPhoneNumber'],
@@ -7,10 +6,7 @@ const showOnlyForPlaceFormatPhoneNumber = {
 };
 
 export const placeFormatPhoneNumberDescription: INodeProperties[] = [
-	{
-		...placeIdSelect,
-		displayOptions: { show: showOnlyForPlaceFormatPhoneNumber },
-	},
+	// placeIdSelect is defined in index.ts to avoid duplication
 	{
 		displayName: 'Phone Number',
 		name: 'phoneNumber',

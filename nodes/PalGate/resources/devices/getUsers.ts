@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { serialSelect } from '../../shared/descriptions';
 
 const showOnlyForDeviceGetUsers = {
 	operation: ['getUsers'],
@@ -7,10 +6,7 @@ const showOnlyForDeviceGetUsers = {
 };
 
 export const deviceGetUsersDescription: INodeProperties[] = [
-	{
-		...serialSelect,
-		displayOptions: { show: showOnlyForDeviceGetUsers },
-	},
+	// serialSelect is defined in index.ts to avoid duplication
 	{
 		displayName: 'Return All',
 		name: 'returnAll',

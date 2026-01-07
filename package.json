@@ -25,7 +25,10 @@
 		"dev": "n8n-node dev",
 		"lint": "n8n-node lint",
 		"lint:fix": "n8n-node lint --fix",
-		"release": "n8n-node release"
+		"release": "n8n-node release",
+		"release:patch": "bash release.sh patch || powershell -ExecutionPolicy Bypass -File release.ps1 patch",
+		"release:minor": "bash release.sh minor || powershell -ExecutionPolicy Bypass -File release.ps1 minor",
+		"release:major": "bash release.sh major || powershell -ExecutionPolicy Bypass -File release.ps1 major"
 	},
 	"files": [
 		"dist"

@@ -1,0 +1,52 @@
+# Development files
+node_modules/
+.git/
+.gitignore
+*.log
+*.env
+*.env.local
+*.env.*.local
+
+# Source files (only dist is published)
+src/
+nodes/
+credentials/
+tsconfig.json
+eslint.config.mjs
+
+# Documentation (optional - remove if you want to include)
+docs/
+*.md
+!README.md
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test files
+test/
+tests/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Build artifacts (except dist)
+*.tsbuildinfo
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+

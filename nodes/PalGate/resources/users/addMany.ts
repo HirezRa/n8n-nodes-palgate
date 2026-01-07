@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { placeIdSelect } from '../../shared/descriptions';
 
 const showOnlyForUserAddMany = {
 	operation: ['addMany'],
@@ -7,10 +6,7 @@ const showOnlyForUserAddMany = {
 };
 
 export const userAddManyDescription: INodeProperties[] = [
-	{
-		...placeIdSelect,
-		displayOptions: { show: showOnlyForUserAddMany },
-	},
+	// placeIdSelect is defined in index.ts to avoid duplication
 	{
 		displayName: 'Users',
 		name: 'users',
