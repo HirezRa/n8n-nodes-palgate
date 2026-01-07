@@ -343,7 +343,7 @@ git add package.json package-lock.json
 if (Test-Path "CHANGELOG.md") {
     git add CHANGELOG.md
 }
-$commitMessage = "chore(release): v$newVersion"
+$commitMessage = 'chore(release): v' + $newVersion
 git commit -m $commitMessage
 if ($LASTEXITCODE -ne 0) {
     Write-Host "WARNING: Nothing to commit (version may already be bumped)" -ForegroundColor Yellow
