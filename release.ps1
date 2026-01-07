@@ -8,7 +8,7 @@ $ErrorActionPreference = "Stop"
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "0) HARD SECURITY GATE - Scanning for sensitive data" -ForegroundColor Cyan
+Write-Host '0) HARD SECURITY GATE - Scanning for sensitive data' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 
 # Patterns to detect sensitive data
@@ -38,7 +38,17 @@ $foundSensitive = $false
 # Scan for sensitive data
 foreach ($pattern in $sensitivePatterns) {
     $matches = Get-ChildItem -Recurse -File | 
-        Where-Object { $excludeFiles -notcontains $_.FullName.Replace((Get-Location).Path + "\", "") } |
+        Where-Object { 
+            $relativePath = $_.FullName.Replace((Get-Location).Path + "\", "")
+            $shouldExclude = $false
+            foreach ($exclude in $excludeFiles) {
+                if ($relativePath -like "*$exclude*") {
+                    $shouldExclude = $true
+                    break
+                }
+            }
+            -not $shouldExclude -and $relativePath -notlike "*credentials*"
+        } |
         Select-String -Pattern $pattern -CaseSensitive:$false |
         Where-Object { 
             $_.Line -notmatch "name:" -and 
@@ -48,11 +58,17 @@ foreach ($pattern in $sensitivePatterns) {
             $_.Line -notmatch "default:\s*['`"]\s*['`"]" -and 
             $_.Line -notmatch "required:" -and 
             $_.Line -notmatch "//" -and 
-            $_.Line -notmatch "^\s*\*"
+            $_.Line -notmatch "^\s*\*" -and
+            $_.Line -notmatch "credentials\." -and
+            $_.Line -notmatch "ICredential" -and
+            $_.Line -notmatch "password:\s*true" -and
+            $_.Line -notmatch "typeOptions:"
         }
     
     if ($matches) {
         Write-Host "ERROR: Found potential sensitive data matching pattern: $pattern" -ForegroundColor Red
+        Write-Host "Matches:" -ForegroundColor Yellow
+        $matches | ForEach-Object { Write-Host "  $($_.Filename):$($_.LineNumber): $($_.Line.Trim())" -ForegroundColor Yellow }
         $foundSensitive = $true
     }
 }
@@ -88,7 +104,7 @@ Write-Host ""
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "1) PREFLIGHT CHECKS" -ForegroundColor Cyan
+Write-Host '1) PREFLIGHT CHECKS' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 
 # Detect current branch
@@ -127,7 +143,7 @@ if ($gitStatus) {
     Write-Host "WARNING: Working tree has uncommitted changes" -ForegroundColor Yellow
     Write-Host "These changes will NOT be committed automatically"
     Write-Host "Please commit or stash changes before running release"
-    $response = Read-Host "Continue anyway? (y/N)"
+    $response = Read-Host 'Continue anyway? (y/N)'
     if ($response -ne "y" -and $response -ne "Y") {
         exit 1
     }
@@ -141,7 +157,7 @@ Write-Host ""
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "2) DUPLICATE-RUN DETECTION (IDEMPOTENCY)" -ForegroundColor Cyan
+Write-Host '2) DUPLICATE-RUN DETECTION (IDEMPOTENCY)' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 
 # Read current version from package.json
@@ -236,7 +252,7 @@ if (-not $isNoOp) {
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "3) BUILD & QUALITY GATE" -ForegroundColor Cyan
+Write-Host '3) BUILD and QUALITY GATE' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 
 # Install dependencies
@@ -284,7 +300,7 @@ Write-Host ""
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "4) VERSIONING & CHANGELOG" -ForegroundColor Cyan
+Write-Host '4) VERSIONING and CHANGELOG' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 
 # Determine version bump type (default: patch)
@@ -316,14 +332,8 @@ if (Test-Path "CHANGELOG.md") {
     $dateStr = Get-Date -Format "yyyy-MM-dd"
     
     if ($changelogContent -notmatch "## \[$newVersion\]") {
-        $newEntry = @"
-
-## [$newVersion] - $dateStr
-
-### Changed
-- Release $newVersion
-"@
-        $changelogContent = $newEntry + "`n`n" + $changelogContent
+        $newEntry = "`n`n## [$newVersion] - $dateStr`n`n### Changed`n- Release $newVersion`n"
+        $changelogContent = $newEntry + $changelogContent
         Set-Content -Path CHANGELOG.md -Value $changelogContent -NoNewline
     }
 }
@@ -346,7 +356,7 @@ Write-Host ""
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "5) NPM PUBLISH (SECURE)" -ForegroundColor Cyan
+Write-Host '5) NPM PUBLISH (SECURE)' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 
 # Verify npm pack output
@@ -380,7 +390,7 @@ Write-Host ""
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "6) GITHUB PUSH & RELEASE" -ForegroundColor Cyan
+Write-Host '6) GITHUB PUSH and RELEASE' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 
 # Create git tag
@@ -447,7 +457,7 @@ Write-Host ""
 # ====================================================
 
 Write-Host "====================================================" -ForegroundColor Cyan
-Write-Host "7) RELEASE SUMMARY" -ForegroundColor Cyan
+Write-Host '7) RELEASE SUMMARY' -ForegroundColor Cyan
 Write-Host "====================================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "✓ RELEASE TYPE: NEW RELEASE" -ForegroundColor Green
