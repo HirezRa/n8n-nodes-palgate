@@ -4,8 +4,6 @@ import { deviceGetAllDescription } from './getAll';
 import { deviceGetDetailsDescription } from './getDetails';
 import { deviceGetLogDescription } from './getLog';
 import { deviceGetUsersDescription } from './getUsers';
-import { deviceAddUsersDescription } from './addUsers';
-import { deviceUpdateSettingsDescription } from './updateSettings';
 import { deviceGetLiveStatusHistoryDescription } from './getLiveStatusHistory';
 import { deviceGetStatusHistoryV2Description } from './getStatusHistoryV2';
 
@@ -23,18 +21,6 @@ export const deviceDescription: INodeProperties[] = [
 			show: showOnlyForDevices,
 		},
 		options: [
-			{
-				name: 'Add Users',
-				value: 'addUsers',
-				action: 'Add users to device',
-				description: 'Add users to a device',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '=/device/{{$parameter.serial}}/users',
-					},
-				},
-			},
 			{
 				name: 'Get Details',
 				value: 'getDetails',
@@ -107,18 +93,6 @@ export const deviceDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Update Settings',
-				value: 'updateSettings',
-				action: 'Update device settings',
-				description: 'Update device settings',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '=/device/{{$parameter.serial}}/settings',
-					},
-				},
-			},
 		],
 		default: 'getAll',
 	},
@@ -135,8 +109,6 @@ export const deviceDescription: INodeProperties[] = [
 	...deviceGetDetailsDescription,
 	...deviceGetLogDescription,
 	...deviceGetUsersDescription,
-	...deviceAddUsersDescription,
-	...deviceUpdateSettingsDescription,
 	...deviceGetLiveStatusHistoryDescription,
 	...deviceGetStatusHistoryV2Description,
 ];

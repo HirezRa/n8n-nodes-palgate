@@ -8,7 +8,6 @@ import { userUpdateByPhoneDescription } from './updateByPhone';
 import { userDeleteDescription } from './delete';
 import { userGetAllDescription } from './getAll';
 import { userGetPortalUsersDescription } from './getPortalUsers';
-import { userGetImageDescription } from './getImage';
 
 const showOnlyForUsers = {
 	resource: ['user'],
@@ -76,18 +75,6 @@ export const userDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Image',
-				value: 'getImage',
-				action: 'Get user image',
-				description: 'Get user profile image',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/app-user/{{$parameter.phone}}/image',
-					},
-				},
-			},
-			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many app users',
@@ -143,7 +130,7 @@ export const userDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUsers,
 			hide: {
-				operation: ['getAll', 'getPortalUsers', 'getImage'],
+				operation: ['getAll', 'getPortalUsers'],
 			},
 		},
 	},
@@ -155,6 +142,5 @@ export const userDescription: INodeProperties[] = [
 	...userDeleteDescription,
 	...userGetAllDescription,
 	...userGetPortalUsersDescription,
-	...userGetImageDescription,
 ];
 

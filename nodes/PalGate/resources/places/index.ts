@@ -1,12 +1,9 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { placeIdSelect } from '../../shared/descriptions';
-import { placeGetAllDescription } from './getAll';
 import { placeGetTreeDescription } from './getTree';
 import { placeGetDetailsDescription } from './getDetails';
-import { placeUpdateDescription } from './update';
 import { placeGetGroupsDescription } from './getGroups';
 import { placeGetUsersDescription } from './getUsers';
-import { placeFormatPhoneNumberDescription } from './formatPhoneNumber';
 
 const showOnlyForPlaces = {
 	resource: ['place'],
@@ -22,21 +19,6 @@ export const placeDescription: INodeProperties[] = [
 			show: showOnlyForPlaces,
 		},
 		options: [
-			{
-				name: 'Format Phone Number',
-				value: 'formatPhoneNumber',
-				action: 'Format phone number',
-				description: 'Format phone number for a place',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/place/{{$parameter.placeId}}/format-number',
-						qs: {
-							pn: '={{$parameter.phoneNumber}}',
-						},
-					},
-				},
-			},
 			{
 				name: 'Get Details',
 				value: 'getDetails',
@@ -58,18 +40,6 @@ export const placeDescription: INodeProperties[] = [
 					request: {
 						method: 'GET',
 						url: '=/place/{{$parameter.placeId}}/groups',
-					},
-				},
-			},
-			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get many places',
-				description: 'Get many places',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/place',
 					},
 				},
 			},
@@ -97,35 +67,20 @@ export const placeDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Update',
-				value: 'update',
-				action: 'Update a place',
-				description: 'Update place information',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '=/place/{{$parameter.placeId}}/general/edit',
-					},
-				},
-			},
 		],
-		default: 'getAll',
+		default: 'getTree',
 	},
 	{
 		...placeIdSelect,
 		displayOptions: {
 			show: showOnlyForPlaces,
 			hide: {
-				operation: ['getAll', 'getTree'],
+				operation: ['getTree'],
 			},
 		},
 	},
-	...placeGetAllDescription,
 	...placeGetTreeDescription,
 	...placeGetDetailsDescription,
-	...placeUpdateDescription,
 	...placeGetGroupsDescription,
 	...placeGetUsersDescription,
-	...placeFormatPhoneNumberDescription,
 ];
