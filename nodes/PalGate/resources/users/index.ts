@@ -54,8 +54,8 @@ export const userDescription: INodeProperties[] = [
 				description: 'Delete a user from a place',
 				routing: {
 					request: {
-						method: 'POST',
-						url: '=/place/{{$parameter.placeId}}/delete-many-users',
+						method: 'DELETE',
+						url: '=/place/{{$parameter.placeId}}/users',
 					},
 				},
 			},

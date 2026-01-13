@@ -19,7 +19,7 @@ export const userDeleteDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'phones',
-				value: '={{$value || []}}',
+				value: '={{Array.isArray($value) ? $value : ($value ? [$value] : [])}}',
 			},
 		},
 	},

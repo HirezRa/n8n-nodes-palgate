@@ -79,7 +79,7 @@ This package provides comprehensive access to the PAL Portal API. Below is a com
 | Add Many | POST | `/place/{placeId}/users` | Add multiple users to a place in a single request |
 | Update | POST | `/place/{placeId}/user` | Update user information |
 | Update By Phone | POST | `/place/{placeId}/user/{phone}` | Update user name and/or cars by phone number |
-| Delete | POST | `/place/{placeId}/delete-many-users` | Delete a user from a place |
+| Delete | DELETE | `/place/{placeId}/users` | Delete a user from a place |
 | Get Many | GET | `/app-user/all-users` | Get all app users (mobile users) |
 | Get Portal Users | GET | `/users` | Get web users (portal users) |
 
