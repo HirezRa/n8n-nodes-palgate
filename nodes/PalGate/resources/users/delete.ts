@@ -14,7 +14,7 @@ export const userDeleteDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'userList',
+				property: 'phones',
 				value: '=[{{$value}}]',
 			},
 		},
