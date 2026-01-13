@@ -10,12 +10,16 @@ export const userDeleteDescription: INodeProperties[] = [
 	// placeIdSelect is defined in index.ts to avoid duplication
 	{
 		...phoneSelect,
+		typeOptions: {
+			multipleValues: true,
+		},
+		default: [],
 		displayOptions: { show: showOnlyForUserDelete },
 		routing: {
 			send: {
 				type: 'body',
 				property: 'phones',
-				value: '={{Array.isArray($value) ? $value : [$value]}}',
+				value: '={{$value || []}}',
 			},
 		},
 	},
