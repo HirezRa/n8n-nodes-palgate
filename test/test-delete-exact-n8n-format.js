@@ -5,16 +5,23 @@
 
 const https = require('https');
 
-const CONFIG = {
-  apiBase: 'https://portal.pal-es.com',
-  credentials: {
-    username: 'REDACTED_EMAIL',
-    password: 'REDACTED_PASSWORD'
-  },
-  placeId: '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad',
-  // המספר מהתמונה: M_phone = 525904030, והנוד יוצר 972525904030
-  phoneToDelete: '972525904030'
-};
+// Load from env only. Do NOT commit real credentials.
+function loadConfig() {
+  const u = process.env.PAL_USERNAME, p = process.env.PAL_PASSWORD;
+  const placeId = process.env.PAL_PLACE_ID || process.env.PLACE_ID;
+  const phoneToDelete = process.env.PHONE || process.env.PAL_PHONE;
+  if (!u || !p || !placeId || !phoneToDelete) {
+    console.error('Set env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PHONE');
+    process.exit(1);
+  }
+  return {
+    apiBase: process.env.PAL_API_BASE || 'https://portal.pal-es.com',
+    credentials: { username: u, password: p },
+    placeId,
+    phoneToDelete,
+  };
+}
+const CONFIG = loadConfig();
 
 let token = null;
 
@@ -166,11 +173,11 @@ async function testDeleteWithDifferentFormats() {
   }
   
   // פורמט 4: userList עם מספר כנומרי (ללא מרכאות)
-  console.log('\n📋 פורמט 4: userList עם מספר כנומרי (972525904030)');
+  console.log('\n📋 פורמט 4: userList עם מספר כנומרי (CONFIG.phoneToDelete)');
   const format4 = await request(
     'POST',
     endpoint,
-    { userList: [972525904030] }, // ללא מרכאות - מספר
+    { userList: [CONFIG.phoneToDelete] }, // ללא מרכאות - מספר
     { 'X-Access-Token': token }
   );
   
@@ -184,7 +191,7 @@ async function testDeleteWithDifferentFormats() {
   const format5 = await request(
     'POST',
     endpoint,
-    { userList: [CONFIG.phoneToDelete, '972525904030'] },
+    { userList: [CONFIG.phoneToDelete, CONFIG.phoneToDelete] },
     { 'X-Access-Token': token }
   );
   
@@ -199,10 +206,10 @@ async function testDeleteWithDifferentFormats() {
   console.log('╚══════════════════════════════════════════════════════════════╝');
   
   const results = [
-    { name: 'פורמט 1: userList: ["972525904030"]', success: format1.ok, error: format1.body },
+    { name: 'פורמט 1: userList: ["CONFIG.phoneToDelete"]', success: format1.ok, error: format1.body },
     { name: 'פורמט 2: userList: ["525904030"]', success: format2.ok, error: format2.body },
     { name: 'פורמט 3: userList: ["0525904030"]', success: format3.ok, error: format3.body },
-    { name: 'פורמט 4: userList: [972525904030] (number)', success: format4.ok, error: format4.body },
+    { name: 'פורמט 4: userList: [CONFIG.phoneToDelete] (number)', success: format4.ok, error: format4.body },
     { name: 'פורמט 5: userList: [multiple]', success: format5.ok, error: format5.body }
   ];
   
@@ -228,7 +235,7 @@ async function testDeleteWithDifferentFormats() {
 async function main() {
   console.log('╔══════════════════════════════════════════════════════════════╗');
   console.log('║     בדיקת פורמטים שונים של מחיקת משתמש                     ║');
-  console.log('║     Phone: 972525904030 (מ-M_phone: 525904030)              ║');
+  console.log('║     Phone: (from env PHONE / PAL_PHONE)                           ║');
   console.log('╚══════════════════════════════════════════════════════════════╝');
   
   if (!await testLogin()) {

@@ -51,11 +51,11 @@ The node accepts phone numbers in various formats and automatically converts the
 
 | Input Format | Converted To | Example |
 |--------------|--------------|---------|
-| `0525904030` | `972525904030` | Local format with 0 |
-| `525904030` | `972525904030` | Without country code |
-| `+972-52-590-4030` | `972525904030` | With formatting |
-| `972 52 590 4030` | `972525904030` | With spaces |
-| `972525904030` | `972525904030` | Already correct |
+| `0525904030` | `<phone>` | Local format with 0 |
+| `525904030` | `<phone>` | Without country code |
+| `+972-52-590-4030` | `<phone>` | With formatting |
+| `972 52 590 4030` | `<phone>` | With spaces |
+| `<phone>` | `<phone>` | Already correct |
 
 ### Using n8n Expressions
 
@@ -65,7 +65,7 @@ You can use n8n expressions to dynamically get phone numbers:
 ```
 972{{ $json.M_phone }}
 ```
-- If `M_phone` is `525904030`, result is `972525904030`
+- If `M_phone` is `525904030`, result is `<phone>`
 - Works with both string and number types ✅
 
 **Option 2: Without 972 prefix**
@@ -90,11 +90,11 @@ The delete operation now correctly handles both string and number types:
 
 ### ✅ Supported Types
 
-- **String:** `"972525904030"`, `"525904030"`, `"0525904030"`
-- **Number:** `972525904030`, `525904030`
-- **Array of strings:** `["972525904030", "0665544987"]`
-- **Array of numbers:** `[972525904030, 665544987]`
-- **Mixed array:** `["972525904030", 665544987]`
+- **String:** `"<phone>"`, `"525904030"`, `"0525904030"`
+- **Number:** `<phone>`, `525904030`
+- **Array of strings:** `["<phone>", "0665544987"]`
+- **Array of numbers:** `[<phone>, 665544987]`
+- **Mixed array:** `["<phone>", 665544987]`
 
 ### Example Scenarios
 
@@ -102,7 +102,7 @@ The delete operation now correctly handles both string and number types:
 ```javascript
 // n8n expression: 972{{ $json.M_phone }}
 // If M_phone = "525904030"
-// Result: "972525904030" (string)
+// Result: "<phone>" (string)
 // ✅ Works
 ```
 
@@ -110,13 +110,13 @@ The delete operation now correctly handles both string and number types:
 ```javascript
 // n8n expression: 972{{ $json.M_phone }}
 // If M_phone = 525904030 (number)
-// Result: 972525904030 (number)
+// Result: <phone> (number)
 // ✅ Works (fixed in v1.0.28)
 ```
 
 **Scenario 3: Direct value**
 ```javascript
-// Direct input: 972525904030
+// Direct input: <phone>
 // ✅ Works (both string and number)
 ```
 
@@ -173,14 +173,14 @@ The delete operation now correctly handles both string and number types:
 ### Example 1: Delete Single User
 
 **Input:**
-- Place ID: `3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad`
-- Phone Number: `972525904030`
+- Place ID: `<placeId>`
+- Phone Number: `<phone>`
 
 **Request:**
 ```json
-POST /api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/delete-many-users
+POST /api1/place/<placeId>/delete-many-users
 {
-  "userList": ["972525904030"]
+  "userList": ["<phone>"]
 }
 ```
 
@@ -196,14 +196,14 @@ POST /api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/delete-many-users
 ### Example 2: Delete Multiple Users
 
 **Input:**
-- Place ID: `3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad`
-- Phone Numbers: `["972525904030", "972665544987"]`
+- Place ID: `<placeId>`
+- Phone Numbers: `["<phone>", "<phone2>"]`
 
 **Request:**
 ```json
-POST /api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/delete-many-users
+POST /api1/place/<placeId>/delete-many-users
 {
-  "userList": ["972525904030", "972665544987"]
+  "userList": ["<phone>", "<phone2>"]
 }
 ```
 
@@ -214,9 +214,9 @@ POST /api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/delete-many-users
 - Phone Number: `972{{ $json.M_phone }}`
 
 **Result:**
-- If `M_phone` is `"525904030"` → `"972525904030"` ✅
-- If `M_phone` is `525904030` (number) → `972525904030` (number) ✅
-- Node formats automatically to `"972525904030"` ✅
+- If `M_phone` is `"525904030"` → `"<phone>"` ✅
+- If `M_phone` is `525904030` (number) → `<phone>` (number) ✅
+- Node formats automatically to `"<phone>"` ✅
 
 ---
 

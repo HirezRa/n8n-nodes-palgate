@@ -1,30 +1,37 @@
 /**
  * Full Test: Add 2 Users, Delete 1, Verify
- * Tests the complete n8n node flow
+ * REQUIRES env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PAL_PHONE_USER1, PAL_PHONE_USER2,
+ *   PAL_FIRST_NAME1, PAL_LAST_NAME1, PAL_FIRST_NAME2, PAL_LAST_NAME2
+ * Do NOT commit real credentials.
  */
 
 const https = require('https');
 
-const CONFIG = {
-  apiBase: 'https://portal.pal-es.com',
-  credentials: {
-    username: 'REDACTED_EMAIL',
-    password: 'REDACTED_PASSWORD'
-  },
-  placeId: '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad',
-  
-  // Test users
-  user1: {
-    phone: '972525904030',
-    firstName: 'אברהם',
-    lastName: 'אבינו'
-  },
-  user2: {
-    phone: '972665544987',
-    firstName: 'כייסי',
-    lastName: 'רחמים'
+function loadConfig() {
+  const u = process.env.PAL_USERNAME, p = process.env.PAL_PASSWORD;
+  const placeId = process.env.PAL_PLACE_ID;
+  const p1 = process.env.PAL_PHONE_USER1, p2 = process.env.PAL_PHONE_USER2;
+  if (!u || !p || !placeId || !p1 || !p2) {
+    console.error('Set env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PAL_PHONE_USER1, PAL_PHONE_USER2');
+    process.exit(1);
   }
-};
+  return {
+    apiBase: process.env.PAL_API_BASE || 'https://portal.pal-es.com',
+    credentials: { username: u, password: p },
+    placeId,
+    user1: {
+      phone: p1,
+      firstName: process.env.PAL_FIRST_NAME1 || 'Test',
+      lastName: process.env.PAL_LAST_NAME1 || 'User1',
+    },
+    user2: {
+      phone: p2,
+      firstName: process.env.PAL_FIRST_NAME2 || 'Test',
+      lastName: process.env.PAL_LAST_NAME2 || 'User2',
+    },
+  };
+}
+const CONFIG = loadConfig();
 
 let token = null;
 
@@ -262,7 +269,7 @@ async function runTest() {
   
   // Step 6: Delete User 1 ONLY
   console.log('\n' + '═'.repeat(60));
-  console.log('🗑️ STEP 6: DELETE USER 1 ONLY (אברהם אבינו - 972525904030)');
+  console.log('STEP 6: DELETE USER 1 ONLY');
   console.log('═'.repeat(60));
   
   const deleteResult = await deleteUser(CONFIG.user1.phone);

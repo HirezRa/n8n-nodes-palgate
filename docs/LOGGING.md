@@ -227,21 +227,21 @@ For Delete User, the validation happens in this order:
 ```
 ======================================================================
 [PAL Gate Node] 2026-01-13T12:00:00.000Z
-[PAL Gate Node] Operation: POST /place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/user
+[PAL Gate Node] Operation: POST /place/<placeId>/user
 [PAL Gate Node] Request Details:
   - method: POST
-  - resource: /place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/user
+  - resource: /place/<placeId>/user
   - body: {
-      "id": "972556677620",
-      "firstname": "כייסף",
-      "lastname": "רחמים",
+      "id": "<phone>",
+      "firstname": "...",
+      "lastname": "...",
       "cars": []
     }
 ======================================================================
 
 ======================================================================
 [PAL Gate Node] 2026-01-13T12:00:01.000Z
-[PAL Gate Node] Response for: POST /place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/user
+[PAL Gate Node] Response for: POST /place/<placeId>/user
 [PAL Gate Node] Status: 200
 [PAL Gate Node] Response Body:
 {

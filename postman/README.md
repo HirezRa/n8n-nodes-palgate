@@ -1,6 +1,11 @@
-# סנכרון עם קולקציית Postman EzTest (PAL Gate API)
+# Postman collection sync (PAL Gate API)
 
-## איך לייצא את הקולקציה המעודכנת
+## Security – do not commit sensitive exports
+
+- **Do not commit** collections exported from HAR or recordings that contain real place IDs, org IDs, tokens, or session data.
+- Use a **clean** Collection v2.1 export (variables like `{{baseUrl}}`, `{{placeId}}`) without real values, or keep export files only locally and add `postman/*.json` to `.gitignore` (already ignored except README).
+
+## How to export the collection
 
 1. פתח את ה-workspace **EzTest** ב-Postman:  
    https://erez-r-9380739.postman.co/workspace/EzTest~58c74e04-b69b-47f7-be94-15a3ceb58678/collection/52096695-66d82603-7e1b-4fa5-a66e-69135747a429

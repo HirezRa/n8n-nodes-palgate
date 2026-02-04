@@ -1,2 +1,22 @@
 dist
 node_modules
+
+# Secrets and credentials - NEVER commit
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+*credentials*.json
+*secrets*
+
+# Test artifacts - may contain IDs from your environment
+test/results/
+test/logs/
+*.log
+
+# Postman/HAR exports - often contain real URLs, place IDs, tokens
+postman/*.json
+!postman/README.md
+**/Generated*.json
+**/*.har

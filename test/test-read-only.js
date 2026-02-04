@@ -4,24 +4,38 @@
  *
  * Run: node test/test-read-only.js
  *
- * Config: placeId, deviceId, orgId, phone for Find/Format/Get Image
+ * REQUIRES env (do NOT commit real values; use .env or export locally):
+ *   PAL_API_BASE, PAL_USERNAME, PAL_PASSWORD,
+ *   PAL_PLACE_ID, PAL_DEVICE_ID, PAL_ORG_ID, PAL_PHONE
+ * Optional: PAL_CAR_ID (for Car Search In Logs)
  */
 
 const https = require('https');
 const fs = require('fs');
 
-const CONFIG = {
-  apiBase: 'https://portal.pal-es.com',
-  credentials: {
-    username: 'REDACTED_EMAIL',
-    password: 'REDACTED_PASSWORD'
-  },
-  orgId: '10131',
-  deviceId: 'LPR100200416',
-  placeId: '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad',
-  phone: '972528745552', // for Find, Format Number, Get Image
-  carId: '87879202'       // optional, for Car Search In Logs (from known user)
-};
+function loadConfig() {
+  const username = process.env.PAL_USERNAME;
+  const password = process.env.PAL_PASSWORD;
+  const placeId = process.env.PAL_PLACE_ID;
+  const deviceId = process.env.PAL_DEVICE_ID;
+  const orgId = process.env.PAL_ORG_ID;
+  const phone = process.env.PAL_PHONE;
+  if (!username || !password || !placeId || !deviceId || !orgId || !phone) {
+    console.error('Missing required env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PAL_DEVICE_ID, PAL_ORG_ID, PAL_PHONE');
+    process.exit(1);
+  }
+  return {
+    apiBase: process.env.PAL_API_BASE || 'https://portal.pal-es.com',
+    credentials: { username, password },
+    orgId,
+    deviceId,
+    placeId,
+    phone,
+    carId: process.env.PAL_CAR_ID || '',
+  };
+}
+
+const CONFIG = loadConfig();
 
 const results = { startTime: new Date().toISOString(), tests: [], summary: { total: 0, passed: 0, failed: 0, skipped: 0 } };
 let authToken = null;
@@ -110,7 +124,7 @@ async function runReadOnlyTests() {
   if (findUser.ok) {
     const list = findUser.body.users?.list ?? findUser.body.users ?? findUser.body.data ?? (Array.isArray(findUser.body) ? findUser.body : []);
     const count = Array.isArray(list) ? list.length : 0;
-    record('User: Find (by phone ' + phone + ')', 'passed', { info: `count=${count}` });
+    record('User: Find (by phone)', 'passed', { info: `count=${count}` });
   } else record('User: Find', 'failed', { error: `Status ${findUser.status}` });
 
   const allAppUsers = await makeRequest('GET', '/api1/app-user/all-users');
@@ -189,7 +203,7 @@ async function runReadOnlyTests() {
   else record('Organization: Get Tree', 'failed', { error: `Status ${orgsTree.status}` });
 
   const orgDetails = await makeRequest('GET', `/api1/org/${orgId}`);
-  if (orgDetails.ok) record('Organization: Get Details (orgId ' + orgId + ')', 'passed');
+  if (orgDetails.ok) record('Organization: Get Details', 'passed');
   else record('Organization: Get Details', 'failed', { error: `Status ${orgDetails.status}` });
 
   // ─── Dashboard ───

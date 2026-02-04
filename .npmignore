@@ -32,9 +32,10 @@ docs/
 *.swo
 *~
 
-# Test files
+# Test files and scripts (never publish)
 test/
 tests/
+test-api.js
 *.test.ts
 *.test.js
 *.spec.ts

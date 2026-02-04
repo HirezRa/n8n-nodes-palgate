@@ -9,13 +9,13 @@ const testCases = [
     name: 'ביטוי n8n: 972{{ $json.M_phone }}',
     input: '525904030', // M_phone מהתמונה
     expression: '972{{ $json.M_phone }}',
-    expected: '972525904030'
+    expected: '<phone from env>'
   },
   {
     name: 'ביטוי n8n: 972{{ $json.M_phone }} (כמספר)',
     input: 525904030, // M_phone כמספר
     expression: '972{{ $json.M_phone }}',
-    expected: '972525904030'
+    expected: '<phone from env>'
   },
   {
     name: 'ביטוי n8n: {{ $json.M_phone }} (ללא 972)',
@@ -125,7 +125,7 @@ console.log('\n\n' + '═'.repeat(70));
 console.log('📋 בדיקה מיוחדת: מה קורה אם n8n שולח את הערך ישירות');
 console.log('═'.repeat(70));
 
-const directValue = '972525904030'; // זה מה שהביטוי אמור לייצר
+const directValue = process.env.PHONE || process.env.PAL_PHONE || ''; // from env
 console.log(`\nDirect value from n8n expression: ${directValue}`);
 const formattedDirect = simulateN8nValueExpression(directValue);
 console.log(`\n✅ Final result: ${JSON.stringify({ userList: formattedDirect })}`);
@@ -135,7 +135,7 @@ console.log('\n\n' + '═'.repeat(70));
 console.log('📋 בדיקה: מה קורה אם n8n שולח מספר (לא string)');
 console.log('═'.repeat(70));
 
-const numericValue = 972525904030;
+const numericValue = directValue ? parseInt(directValue, 10) : 0;
 console.log(`\nNumeric value: ${numericValue}`);
 const formattedNumeric = simulateN8nValueExpression(numericValue);
 console.log(`\n✅ Final result: ${JSON.stringify({ userList: formattedNumeric })}`);

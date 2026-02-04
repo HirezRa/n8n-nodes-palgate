@@ -6,15 +6,22 @@
 
 const https = require('https');
 
-const CONFIG = {
-  apiBase: 'https://portal.pal-es.com',
-  credentials: {
-    username: 'REDACTED_EMAIL',
-    password: 'REDACTED_PASSWORD'
-  },
-  placeId: '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad',
-  testPhone: '972561239876'
-};
+function loadConfig() {
+  const u = process.env.PAL_USERNAME, p = process.env.PAL_PASSWORD;
+  const placeId = process.env.PAL_PLACE_ID || process.env.PLACE_ID;
+  const testPhone = process.env.PHONE || process.env.PAL_PHONE;
+  if (!u || !p || !placeId || !testPhone) {
+    console.error('Set env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PHONE');
+    process.exit(1);
+  }
+  return {
+    apiBase: process.env.PAL_API_BASE || 'https://portal.pal-es.com',
+    credentials: { username: u, password: p },
+    placeId,
+    testPhone,
+  };
+}
+const CONFIG = loadConfig();
 
 let token = null;
 

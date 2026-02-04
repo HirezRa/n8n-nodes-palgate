@@ -1,20 +1,28 @@
 /**
  * בדיקה מדויקת של פעולת מחיקת משתמש
  * שולח בדיוק כמו שהנוד של n8n שולח
- * Phone: 972525904030
+ * Phone from env PHONE or PAL_PHONE
  */
 
 const https = require('https');
 
-const CONFIG = {
-  apiBase: 'https://portal.pal-es.com',
-  credentials: {
-    username: 'REDACTED_EMAIL',
-    password: 'REDACTED_PASSWORD'
-  },
-  placeId: '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad',
-  phoneToDelete: '972525904030'
-};
+// Load from env only. Do NOT commit real credentials.
+function loadConfig() {
+  const u = process.env.PAL_USERNAME, p = process.env.PAL_PASSWORD;
+  const placeId = process.env.PAL_PLACE_ID || process.env.PLACE_ID;
+  const phoneToDelete = process.env.PHONE || process.env.PAL_PHONE;
+  if (!u || !p || !placeId || !phoneToDelete) {
+    console.error('Set env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PHONE');
+    process.exit(1);
+  }
+  return {
+    apiBase: process.env.PAL_API_BASE || 'https://portal.pal-es.com',
+    credentials: { username: u, password: p },
+    placeId,
+    phoneToDelete,
+  };
+}
+const CONFIG = loadConfig();
 
 let token = null;
 
@@ -194,7 +202,7 @@ async function testDeleteExactNodeFormat() {
   // הפורמט המדויק שהנוד של n8n שולח:
   // Method: POST
   // Endpoint: /api1/place/{placeId}/delete-many-users
-  // Body: { "userList": ["972525904030"] }
+  // Body: { "userList": [phoneToDelete] }
   // Headers: X-Access-Token: {token}
   // ═══════════════════════════════════════════════════════════════
   
@@ -275,7 +283,7 @@ async function verifyDeletion() {
 async function runFullTest() {
   console.log('╔══════════════════════════════════════════════════════════════╗');
   console.log('║     בדיקת פעולת מחיקת משתמש - פורמט מדויק של נוד n8n      ║');
-  console.log('║     Phone: 972525904030                                      ║');
+  console.log('║     Phone: (from env)                                        ║');
   console.log('╚══════════════════════════════════════════════════════════════╝');
   
   // שלב 1: התחברות

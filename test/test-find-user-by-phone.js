@@ -1,5 +1,5 @@
 /**
- * Test: Find user by phone (e.g. 972528745552)
+ * Test: Find user by phone (env PHONE)
  * Simulates the node operation: User > Find with filter=phone
  *
  * Usage:
@@ -8,14 +8,15 @@
  *
  * Required env (or copy from test/automated-tests.js CONFIG):
  *   PAL_USERNAME, PAL_PASSWORD, PLACE_ID
- * Optional: PHONE (default 972528745552)
+ * Required env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PHONE
+ * Do NOT commit real credentials. Use .env (gitignored) or export locally.
  */
 
 const https = require('https');
 
-const PLACE_ID = process.env.PLACE_ID || '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad';
-const PHONE = process.env.PHONE || '972528745552';
-const API_BASE = 'https://portal.pal-es.com';
+const PLACE_ID = process.env.PAL_PLACE_ID || process.env.PLACE_ID;
+const PHONE = process.env.PHONE;
+const API_BASE = process.env.PAL_API_BASE || 'https://portal.pal-es.com';
 
 function makeRequest(method, path, body = null, token = null) {
   return new Promise((resolve, reject) => {
@@ -59,8 +60,8 @@ async function main() {
   const username = process.env.PAL_USERNAME;
   const password = process.env.PAL_PASSWORD;
 
-  if (!username || !password) {
-    console.error('Set PAL_USERNAME and PAL_PASSWORD (or run from project that has .env)');
+  if (!username || !password || !PLACE_ID || !PHONE) {
+    console.error('Set env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID (or PLACE_ID), PHONE');
     process.exit(1);
   }
 

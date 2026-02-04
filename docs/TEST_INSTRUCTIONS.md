@@ -11,9 +11,8 @@
    - Production: `npm install n8n-nodes-palgate` in n8n
 
 3. **PAL Gate credentials configured**
-   - Create credentials in n8n UI
-   - Username: `REDACTED_EMAIL`
-   - Password: `REDACTED_PASSWORD`
+   - Create credentials in n8n UI with your PAL Gate username and password
+   - Do not commit or document real credentials
 
 ## Test 1: Add User
 
@@ -27,10 +26,9 @@
 
 ### Parameters
 
-- **Place ID:** `3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad`
-- **Phone:** `972556677620`
-- **First Name:** `כייסף`
-- **Last Name:** `רחמים`
+- **Place ID:** your place UUID (from PAL portal)
+- **Phone:** test user phone (e.g. international format)
+- **First Name / Last Name:** any test values
 - **Cars:** (leave empty or add car numbers)
 
 ### Expected Result
@@ -73,8 +71,8 @@
 
 ### Parameters
 
-- **Place ID:** `3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad`
-- **Phone:** `972556677620` (the test user we added)
+- **Place ID:** same as used for Add
+- **Phone:** the test user phone you added
 
 ### Expected Result
 

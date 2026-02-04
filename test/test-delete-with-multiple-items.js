@@ -5,15 +5,23 @@
 
 const https = require('https');
 
-const CONFIG = {
-  apiBase: 'https://portal.pal-es.com',
-  credentials: {
-    username: 'REDACTED_EMAIL',
-    password: 'REDACTED_PASSWORD'
-  },
-  placeId: '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad',
-  testPhone: '972525904030'
-};
+// Load from env only. Do NOT commit real credentials.
+function loadConfig() {
+  const u = process.env.PAL_USERNAME, p = process.env.PAL_PASSWORD;
+  const placeId = process.env.PAL_PLACE_ID || process.env.PLACE_ID;
+  const testPhone = process.env.PHONE || process.env.PAL_PHONE;
+  if (!u || !p || !placeId || !testPhone) {
+    console.error('Set env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PHONE');
+    process.exit(1);
+  }
+  return {
+    apiBase: process.env.PAL_API_BASE || 'https://portal.pal-es.com',
+    credentials: { username: u, password: p },
+    placeId,
+    testPhone,
+  };
+}
+const CONFIG = loadConfig();
 
 let token = null;
 
@@ -169,8 +177,8 @@ async function testDirectValue() {
   console.log('╚══════════════════════════════════════════════════════════════╝');
   
   // סימולציה: n8n מעביר את הערך מהביטוי 972{{ $json.M_phone }}
-  // אם M_phone = 525904030, התוצאה היא 972525904030
-  const directValue = '972525904030';
+  // Use env phone (e.g. 972XXXXXXXXX)
+  const directValue = CONFIG.testPhone;
   
   console.log(`\nDirect value from expression: ${directValue}`);
   const formatted = simulateN8nValueExpression(directValue);
@@ -205,8 +213,7 @@ async function testMultipleItems() {
   console.log('╚══════════════════════════════════════════════════════════════╝');
   
   // סימולציה: n8n מעביר 2 פריטים, כל אחד עם הביטוי 972{{ $json.M_phone }}
-  // Item 0: M_phone = 525904030 → 972525904030
-  // Item 1: M_phone = 525904030 → 972525904030 (אותו מספר)
+  // Item 0 and 1: same phone from env
   
   const items = [
     { M_phone: '525904030' },
@@ -250,7 +257,7 @@ async function testArrayValue() {
   console.log('╚══════════════════════════════════════════════════════════════╝');
   
   // סימולציה: מה אם n8n מעביר array ישירות?
-  const arrayValue = ['972525904030', '972525904030'];
+  const arrayValue = [CONFIG.testPhone, CONFIG.testPhone];
   
   console.log(`\nArray value: ${JSON.stringify(arrayValue)}`);
   const formatted = simulateN8nValueExpression(arrayValue);

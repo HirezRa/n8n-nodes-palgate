@@ -14,27 +14,30 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-// ============== CONFIGURATION ==============
-const CONFIG = {
-  apiBase: 'https://portal.pal-es.com',
-  credentials: {
-    username: 'REDACTED_EMAIL',
-    password: 'REDACTED_PASSWORD'
-  },
-  orgId: '10131',
-  deviceId: 'LPR100200416',
-  placeId: '3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad',
-  
-  // Test data - will be created and then deleted
-  testUser: {
-    firstName: 'אהרון',
-    lastName: 'אבינו',
-    phone: '972561239876'  // With country code
-  },
-  testVehicle: {
-    licensePlate: '90741202'
+// ============== CONFIGURATION (env only - do NOT commit real values) ==============
+function loadConfig() {
+  const u = process.env.PAL_USERNAME, p = process.env.PAL_PASSWORD;
+  const placeId = process.env.PAL_PLACE_ID, deviceId = process.env.PAL_DEVICE_ID, orgId = process.env.PAL_ORG_ID;
+  const phone = process.env.PAL_PHONE;
+  if (!u || !p || !placeId || !deviceId || !orgId || !phone) {
+    console.error('Set env: PAL_USERNAME, PAL_PASSWORD, PAL_PLACE_ID, PAL_DEVICE_ID, PAL_ORG_ID, PAL_PHONE');
+    process.exit(1);
   }
-};
+  return {
+    apiBase: process.env.PAL_API_BASE || 'https://portal.pal-es.com',
+    credentials: { username: u, password: p },
+    orgId,
+    deviceId,
+    placeId,
+    testUser: {
+      firstName: process.env.PAL_TEST_FIRST_NAME || 'Test',
+      lastName: process.env.PAL_TEST_LAST_NAME || 'User',
+      phone,
+    },
+    testVehicle: { licensePlate: process.env.PAL_CAR_ID || process.env.PAL_LICENSE_PLATE || '' },
+  };
+}
+const CONFIG = loadConfig();
 
 // ============== LOGGING ==============
 const LOG_FILE = path.join(__dirname, 'logs', `test-run-${new Date().toISOString().replace(/[:.]/g, '-')}.log`);
