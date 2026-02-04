@@ -1,0 +1,133 @@
+{
+  "startTime": "2026-02-04T13:31:54.088Z",
+  "tests": [
+    {
+      "name": "Auth: Login with valid credentials",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:56.896Z",
+      "response": {
+        "tokenReceived": true
+      }
+    },
+    {
+      "name": "Auth: Reject invalid credentials",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:56.973Z"
+    },
+    {
+      "name": "Places: Get all places",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:57.056Z",
+      "response": {
+        "count": 1
+      }
+    },
+    {
+      "name": "Places: Get single place",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:57.164Z",
+      "response": {
+        "name": "mer group"
+      }
+    },
+    {
+      "name": "Users: Get all users",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:57.256Z",
+      "response": {
+        "count": 0
+      }
+    },
+    {
+      "name": "Users: Add user",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:57.357Z",
+      "response": {
+        "err": null,
+        "errId": 0,
+        "msg": "user added to place",
+        "userId": "972561239876"
+      }
+    },
+    {
+      "name": "Users: Verify user exists after add",
+      "status": "skipped",
+      "timestamp": "2026-02-04T13:31:57.765Z",
+      "error": "User not found in filtered results (may be pagination issue)"
+    },
+    {
+      "name": "Users: Update user",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:57.863Z"
+    },
+    {
+      "name": "Groups: Get all groups",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:57.943Z",
+      "response": {
+        "count": 0
+      }
+    },
+    {
+      "name": "Vehicles: Get all vehicles",
+      "status": "skipped",
+      "timestamp": "2026-02-04T13:31:58.018Z",
+      "error": "Status 404 - endpoint may not exist"
+    },
+    {
+      "name": "Vehicles: Add vehicle",
+      "status": "skipped",
+      "timestamp": "2026-02-04T13:31:58.094Z",
+      "error": "Status 404 - endpoint may not exist"
+    },
+    {
+      "name": "Devices: Get device info",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:58.178Z",
+      "response": {
+        "deviceId": "LPR100200416"
+      }
+    },
+    {
+      "name": "Devices: Open gate endpoint",
+      "status": "skipped",
+      "timestamp": "2026-02-04T13:31:58.179Z",
+      "error": "Skipped to avoid unintended gate operation"
+    },
+    {
+      "name": "Error: Reject empty phone on add",
+      "status": "failed",
+      "timestamp": "2026-02-04T13:31:58.282Z",
+      "error": "API accepted empty phone"
+    },
+    {
+      "name": "Error: Reject invalid place ID",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:58.356Z",
+      "response": {
+        "status": 403
+      }
+    },
+    {
+      "name": "Error: Reject request without auth",
+      "status": "passed",
+      "timestamp": "2026-02-04T13:31:58.434Z",
+      "response": {
+        "status": 401
+      }
+    },
+    {
+      "name": "Delete: Delete single user",
+      "status": "skipped",
+      "timestamp": "2026-02-04T13:31:58.605Z",
+      "error": "Could not verify delete result"
+    }
+  ],
+  "summary": {
+    "total": 17,
+    "passed": 11,
+    "failed": 1,
+    "skipped": 5
+  },
+  "endTime": "2026-02-04T13:31:58.605Z"
+}

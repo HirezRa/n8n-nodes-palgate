@@ -1,4 +1,5 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { authDescription } from './resources/auth';
 import { userDescription } from './resources/users';
 import { carDescription } from './resources/cars';
 import { placeDescription } from './resources/places';
@@ -42,6 +43,11 @@ export class PalGate implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: 'Auth',
+						value: 'auth',
+						description: 'Test connection to PAL Gate API',
+					},
+					{
 						name: 'Car',
 						value: 'car',
 					},
@@ -68,6 +74,7 @@ export class PalGate implements INodeType {
 				],
 				default: 'user',
 			},
+			...authDescription,
 			...userDescription,
 			...carDescription,
 			...placeDescription,

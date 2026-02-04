@@ -4,6 +4,7 @@ import { placeGetTreeDescription } from './getTree';
 import { placeGetDetailsDescription } from './getDetails';
 import { placeGetGroupsDescription } from './getGroups';
 import { placeGetUsersDescription } from './getUsers';
+import { placeFormatNumberDescription } from './formatNumber';
 
 const showOnlyForPlaces = {
 	resource: ['place'],
@@ -19,6 +20,21 @@ export const placeDescription: INodeProperties[] = [
 			show: showOnlyForPlaces,
 		},
 		options: [
+			{
+				name: 'Format Number',
+				value: 'formatNumber',
+				action: 'Format phone number',
+				description: 'Format a phone number (utility endpoint)',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/place/{{$parameter.placeId}}/format-number',
+						qs: {
+							pn: '={{$parameter.phone}}',
+						},
+					},
+				},
+			},
 			{
 				name: 'Get Details',
 				value: 'getDetails',
@@ -83,4 +99,5 @@ export const placeDescription: INodeProperties[] = [
 	...placeGetDetailsDescription,
 	...placeGetGroupsDescription,
 	...placeGetUsersDescription,
+	...placeFormatNumberDescription,
 ];

@@ -1,0 +1,70 @@
+{
+  "startTime": "2026-01-13T11:50:14.486Z",
+  "endTime": "2026-01-13T11:50:18.083Z",
+  "totalTests": 7,
+  "passed": 6,
+  "failed": 1,
+  "skipped": 0,
+  "tests": [
+    {
+      "name": "Login with valid credentials",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:17.578Z",
+      "details": {
+        "endpoint": "/api1/user/login1",
+        "tokenReceived": true
+      }
+    },
+    {
+      "name": "Login with invalid credentials (should fail)",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:17.647Z",
+      "details": {
+        "status": 401,
+        "correctlyRejected": true
+      }
+    },
+    {
+      "name": "Get Places Tree",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:17.721Z",
+      "details": {
+        "endpoint": "/api1/places-tree",
+        "hasData": true
+      }
+    },
+    {
+      "name": "Get Place Details",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:17.869Z",
+      "details": {
+        "endpoint": "/api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad",
+        "placeName": "N/A"
+      }
+    },
+    {
+      "name": "Get Users List",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:18.005Z",
+      "details": {
+        "endpoint": "/api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/users"
+      }
+    },
+    {
+      "name": "Get Users List",
+      "status": "failed",
+      "timestamp": "2026-01-13T11:50:18.007Z",
+      "details": {
+        "error": "usersList.slice is not a function"
+      }
+    },
+    {
+      "name": "Get Place Groups",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:18.081Z",
+      "details": {
+        "endpoint": "/api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/groups"
+      }
+    }
+  ]
+}

@@ -79,31 +79,17 @@ export const placeGetUsersDescription: INodeProperties[] = [
 		description: 'Number of records to skip',
 	},
 	{
-		displayName: 'Phone Filter',
-		name: 'phoneFilter',
+		displayName: 'Filter',
+		name: 'filter',
 		type: 'string',
 		displayOptions: { show: showOnlyForPlaceGetUsers },
 		default: '',
 		routing: {
 			send: {
 				type: 'query',
-				property: 'phoneFilter',
+				property: 'filter',
 			},
 		},
-		description: 'Optional phone number filter',
-	},
-	{
-		displayName: 'Name Filter',
-		name: 'nameFilter',
-		type: 'string',
-		displayOptions: { show: showOnlyForPlaceGetUsers },
-		default: '',
-		routing: {
-			send: {
-				type: 'query',
-				property: 'nameFilter',
-			},
-		},
-		description: 'Optional name filter',
+		description: 'Optional search by phone, name, or car number',
 	},
 ];

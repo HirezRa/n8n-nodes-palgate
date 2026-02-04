@@ -23,7 +23,7 @@ export const carDescription: INodeProperties[] = [
 				name: 'Add',
 				value: 'add',
 				action: 'Add a car',
-				description: 'Add a car to a user',
+				description: '⚠️ Vehicle operations are currently not supported by the PAL Gate API. This feature may be added in a future API update.',
 				routing: {
 					request: {
 						method: 'POST',
@@ -35,7 +35,7 @@ export const carDescription: INodeProperties[] = [
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete a car',
-				description: 'Delete a car from a user (POST method)',
+				description: '⚠️ Vehicle operations are currently not supported by the PAL Gate API. This feature may be added in a future API update.',
 				routing: {
 					request: {
 						method: 'POST',
@@ -51,7 +51,7 @@ export const carDescription: INodeProperties[] = [
 				name: 'Delete By ID',
 				value: 'deleteById',
 				action: 'Delete a car by ID',
-				description: 'Delete a car from a user using DELETE method',
+				description: '⚠️ Vehicle operations are currently not supported by the PAL Gate API. This feature may be added in a future API update.',
 				routing: {
 					request: {
 						method: 'DELETE',
@@ -63,7 +63,7 @@ export const carDescription: INodeProperties[] = [
 				name: 'Search In Logs',
 				value: 'searchInLogs',
 				action: 'Search car in logs',
-				description: 'Search for a car in logs',
+				description: '⚠️ Vehicle operations are currently not supported by the PAL Gate API. This feature may be added in a future API update.',
 				routing: {
 					request: {
 						method: 'GET',

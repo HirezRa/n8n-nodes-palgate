@@ -11,10 +11,14 @@ export const userAddDescription: INodeProperties[] = [
 	{
 		...phoneSelect,
 		displayOptions: { show: showOnlyForUserAdd },
+		required: true,
+		description: 'Phone number (user ID). Cannot be empty - API will generate a random ID if empty.',
 		routing: {
 			send: {
 				type: 'body',
 				property: 'id',
+				// Validate phone is not empty
+				value: '={{(() => { if (!$value || (typeof $value === "string" && $value.trim() === "")) { throw new Error("Phone number is required and cannot be empty. The API will generate a random user ID if phone is empty, which is usually not desired."); } return $value; })()}}',
 			},
 		},
 	},

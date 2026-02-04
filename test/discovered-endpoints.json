@@ -1,0 +1,59 @@
+{
+  "auth": {
+    "path": "/api1/user/login1",
+    "method": "POST"
+  },
+  "users": {
+    "getAll": {
+      "path": "/api1/place/{placeId}/users",
+      "method": "GET"
+    },
+    "add": {
+      "path": "/api1/place/{placeId}/user",
+      "method": "POST",
+      "bodyFormat": "format1"
+    },
+    "update": {
+      "path": "/api1/place/{placeId}/user",
+      "method": "POST"
+    },
+    "delete": {
+      "path": "/api1/place/{placeId}/users",
+      "method": "DELETE",
+      "bodyFormat": {
+        "phones": [
+          "phoneNumber"
+        ]
+      },
+      "warning": "API may have issues - verify results"
+    }
+  },
+  "vehicles": {
+    "getAll": null,
+    "add": null,
+    "delete": null
+  },
+  "places": {
+    "getAll": {
+      "path": "/api1/places-tree",
+      "method": "GET"
+    },
+    "getOne": {
+      "path": "/api1/place/{placeId}",
+      "method": "GET"
+    }
+  },
+  "groups": {
+    "getAll": {
+      "path": "/api1/place/{placeId}/groups",
+      "method": "GET"
+    }
+  },
+  "devices": {
+    "getOne": {
+      "path": "/api1/device/{deviceId}",
+      "method": "GET"
+    },
+    "open": null
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "startTime": "2026-01-13T11:50:56.250Z",
+  "endTime": "2026-01-13T11:51:01.600Z",
+  "totalTests": 14,
+  "passed": 8,
+  "failed": 3,
+  "skipped": 3,
+  "tests": [
+    {
+      "name": "Login with valid credentials",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:59.532Z",
+      "details": {
+        "endpoint": "/api1/user/login1",
+        "tokenReceived": true
+      }
+    },
+    {
+      "name": "Login with invalid credentials (should fail)",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:59.604Z",
+      "details": {
+        "status": 401,
+        "correctlyRejected": true
+      }
+    },
+    {
+      "name": "Get Places Tree",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:50:59.751Z",
+      "details": {
+        "endpoint": "/api1/places-tree",
+        "hasData": true
+      }
+    },
+    {
+      "name": "Get Place Details",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:51:00.107Z",
+      "details": {
+        "endpoint": "/api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad",
+        "placeName": "N/A"
+      }
+    },
+    {
+      "name": "Get Users List",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:51:00.276Z",
+      "details": {
+        "endpoint": "/api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/users",
+        "count": 10,
+        "totalCount": 433
+      }
+    },
+    {
+      "name": "Get Place Groups",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:51:00.390Z",
+      "details": {
+        "endpoint": "/api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/groups"
+      }
+    },
+    {
+      "name": "Add User - Create new user",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:51:00.510Z",
+      "details": {
+        "endpoint": "/api1/place/3c4b88c3-ab7a-4ac5-9c1a-1fb656e095ad/user",
+        "body": {
+          "id": "972561239876",
+          "firstname": "אהרון",
+          "lastname": "אבינו"
+        },
+        "response": {
+          "err": null,
+          "errId": 0,
+          "msg": "user added to place",
+          "userId": "972561239876"
+        }
+      }
+    },
+    {
+      "name": "Add User - Verify user exists",
+      "status": "failed",
+      "timestamp": "2026-01-13T11:51:00.634Z",
+      "details": {
+        "error": "User not found in list after adding"
+      }
+    },
+    {
+      "name": "Add Vehicle - Create new vehicle",
+      "status": "skipped",
+      "timestamp": "2026-01-13T11:51:00.740Z",
+      "details": {
+        "reason": "Status 404",
+        "response": {
+          "error": "resource not found, check api path"
+        }
+      }
+    },
+    {
+      "name": "Update User By Phone",
+      "status": "skipped",
+      "timestamp": "2026-01-13T11:51:00.815Z",
+      "details": {
+        "reason": "Status 404",
+        "response": {
+          "error": "resource not found, check api path"
+        }
+      }
+    },
+    {
+      "name": "Error Handling - Empty phone rejected",
+      "status": "failed",
+      "timestamp": "2026-01-13T11:51:00.957Z",
+      "details": {
+        "error": "Expected 400, got 200"
+      }
+    },
+    {
+      "name": "Error Handling - Empty phones array blocked",
+      "status": "failed",
+      "timestamp": "2026-01-13T11:51:01.096Z",
+      "details": {
+        "error": "CRITICAL: API accepted empty phones array - this could delete all users!"
+      }
+    },
+    {
+      "name": "Error Handling - Invalid place ID",
+      "status": "passed",
+      "timestamp": "2026-01-13T11:51:01.099Z",
+      "details": {
+        "status": 400
+      }
+    },
+    {
+      "name": "Delete Vehicle",
+      "status": "skipped",
+      "timestamp": "2026-01-13T11:51:01.374Z",
+      "details": {
+        "reason": "Status 404",
+        "response": {
+          "error": "resource not found, check api path"
+        }
+      }
+    }
+  ]
+}

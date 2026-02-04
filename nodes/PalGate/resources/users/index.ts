@@ -8,6 +8,7 @@ import { userUpdateByPhoneDescription } from './updateByPhone';
 import { userDeleteDescription } from './delete';
 import { userGetAllDescription } from './getAll';
 import { userGetPortalUsersDescription } from './getPortalUsers';
+import { userGetImageDescription } from './getImage';
 
 const showOnlyForUsers = {
 	resource: ['user'],
@@ -54,8 +55,8 @@ export const userDescription: INodeProperties[] = [
 				description: 'Delete a user from a place',
 				routing: {
 					request: {
-						method: 'DELETE',
-						url: '=/place/{{$parameter.placeId}}/users',
+						method: 'POST',
+						url: '=/place/{{$parameter.placeId}}/delete-many-users',
 					},
 				},
 			},
@@ -63,14 +64,28 @@ export const userDescription: INodeProperties[] = [
 				name: 'Find',
 				value: 'find',
 				action: 'Find a user by phone',
-				description: 'Find user by phone number in a place',
+				description: 'Find user by phone number in a place (search by phone, name, or car)',
 				routing: {
 					request: {
 						method: 'GET',
 						url: '=/place/{{$parameter.placeId}}/users',
 						qs: {
+							skip: 0,
+							limit: 100,
 							filter: '={{$parameter.phone}}',
 						},
+					},
+				},
+			},
+			{
+				name: 'Get Image',
+				value: 'getImage',
+				action: 'Get user image',
+				description: 'Get app user profile image by phone number',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/app-user/{{$parameter.phone}}/image',
 					},
 				},
 			},
@@ -130,7 +145,7 @@ export const userDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForUsers,
 			hide: {
-				operation: ['getAll', 'getPortalUsers'],
+				operation: ['getAll', 'getPortalUsers', 'getImage'],
 			},
 		},
 	},
@@ -142,5 +157,6 @@ export const userDescription: INodeProperties[] = [
 	...userDeleteDescription,
 	...userGetAllDescription,
 	...userGetPortalUsersDescription,
+	...userGetImageDescription,
 ];
 

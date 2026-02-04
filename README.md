@@ -1,15 +1,6 @@
 # n8n-nodes-palgate
 
-n8n community node for PAL Portal API - manage users, cars, places, devices, and organizations.
-
-## Features
-
-- **User Management**: Find, add, update, and delete users
-- **Car Management**: Add and remove cars from users
-- **Place Management**: Manage places and their configurations
-- **Device Management**: Monitor and manage devices
-- **Organization Management**: Handle organizations and their hierarchies
-- **Dashboard**: Access dashboard statistics and favorites
+n8n community node for PAL Gate parking management system integration.
 
 ## Installation
 
@@ -17,129 +8,231 @@ n8n community node for PAL Portal API - manage users, cars, places, devices, and
 npm install n8n-nodes-palgate
 ```
 
-## Usage
+Or install via n8n Community Nodes settings in your n8n instance.
 
-1. Install the package in your n8n instance
-2. Add the "PAL Gate" node to your workflow
-3. Configure credentials with your PAL Portal username and password
-4. Select the resource and operation you want to perform
+## Supported Operations
 
-## Resources
+### ✅ Fully Working
 
-### User Management
-- **Find**: Find a user by phone number in a place
-- **Add**: Add a new user to a place
-- **Add Many**: Add multiple users to a place in a single request
-- **Update**: Update user information
-- **Update By Phone**: Update user name and/or cars by phone number
-- **Delete**: Delete a user from a place
-- **Get Many**: Get all app users (mobile users)
-- **Get Portal Users**: Get web users (portal users)
+| Resource | Operation | Status | Description |
+|----------|-----------|--------|-------------|
+| **Auth** | Test Connection | ✅ Working | Verify credentials and connection to PAL Gate (uses minimal API call) |
+| **Places** | Get All | ✅ Working | Get hierarchical tree of places |
+| **Places** | Get One | ✅ Working | Get details of a specific place |
+| **Users** | Get All | ✅ Working | Get all users in a place |
+| **Users** | Add | ✅ Working | Add a new user to a place |
+| **Users** | Update | ✅ Working | Update user information |
+| **Groups** | Get All | ✅ Working | Get groups for a place |
+| **Devices** | Get Info | ✅ Working | Get device information |
 
-### Car Management
-- **Add**: Add a car to a user
-- **Delete**: Delete a car from a user (POST method)
-- **Delete By ID**: Delete a car from a user using DELETE method
-- **Search In Logs**: Search for a car in logs
+### ⚠️ Limited Support
 
-### Place Management
-- **Get Tree**: Get hierarchical tree of places
-- **Get Details**: Get details of a specific place
-- **Get Groups**: Get groups for a place
-- **Get Users**: Get users in a place with filtering
+| Resource | Operation | Status | Notes |
+|----------|-----------|--------|-------|
+| **Users** | Delete | ✅ Working | Fixed in v1.0.28 - handles both string and number phone formats |
+| **Devices** | Open Gate | ⚠️ Use carefully | Triggers physical gate operation |
 
-### Device Management
-- **Get Many**: Get list of devices with filtering
-- **Get Details**: Get details of a specific device
-- **Get Log**: Get log entries for a device
-- **Get Live Status History**: Get live status history for a device
-- **Get Status History V2**: Get extended status history for a device
-- **Get Users**: Get users who recently passed through a device
+### ❌ Not Available
 
-### Organization Management
-- **Get Tree**: Get hierarchical tree of organizations
-- **Get Details**: Get details of a specific organization
+| Resource | Operation | Status | Notes |
+|----------|-----------|--------|-------|
+| **Vehicles** | All Operations | ❌ Not supported | API endpoints not available - may be added in future updates |
 
-### Dashboard
-- **Get Favorites**: Get admin user favorites (devices and places)
-- **Get Recent**: Get recent devices and places viewed by admin user
-- **Get Statistics**: Get dashboard statistics (devices count, places count, users count)
-- **Get Devices Markers**: Get device markers for map display (geographic coordinates)
+## Configuration
 
-## Supported API Functions
+### Credentials
 
-This package provides comprehensive access to the PAL Portal API. Below is a complete list of all supported API functions organized by resource category:
+The node requires PAL Gate API credentials:
 
-### 👥 User Management (8 operations)
+- **Username/Email**: Your PAL Gate account email
+- **Password**: Your PAL Gate account password
+- **API URL**: `https://portal.pal-es.com` (default, automatically configured)
 
-| Operation | Method | Endpoint | Description |
-|-----------|--------|----------|-------------|
-| Find | GET | `/place/{placeId}/users` | Find user by phone number in a place |
-| Add | POST | `/place/{placeId}/user` | Add a new user to a place |
-| Add Many | POST | `/place/{placeId}/users` | Add multiple users to a place in a single request |
-| Update | POST | `/place/{placeId}/user` | Update user information |
-| Update By Phone | POST | `/place/{placeId}/user/{phone}` | Update user name and/or cars by phone number |
-| Delete | DELETE | `/place/{placeId}/users` | Delete a user from a place |
-| Get Many | GET | `/app-user/all-users` | Get all app users (mobile users) |
-| Get Portal Users | GET | `/users` | Get web users (portal users) |
+### Testing the Connection
 
-### 🚗 Car Management (4 operations)
+You can verify your credentials and connection in two ways:
 
-| Operation | Method | Endpoint | Description |
-|-----------|--------|----------|-------------|
-| Add | POST | `/place/{placeId}/cars` | Add a car to a user |
-| Delete | POST | `/place/{placeId}/delete-car` | Delete a car from a user (POST method) |
-| Delete By ID | DELETE | `/place/{placeId}/user/{phone}/car/{carId}` | Delete a car from a user using DELETE method |
-| Search In Logs | GET | `/place/{placeId}/reports/car` | Search for a car in logs |
+1. **From the node:** Add a PAL Gate node → choose **Resource: Auth** → **Operation: Test Connection**. Run the node; if it succeeds, credentials and connection are valid.
+2. **When saving credentials:** In the credential dialog, use the **Test** / **Verify** button (if shown by your n8n version) to validate the connection before saving.
 
-### 🏢 Place Management (4 operations)
+### Required Parameters
 
-| Operation | Method | Endpoint | Description |
-|-----------|--------|----------|-------------|
-| Get Tree | GET | `/places-tree` | Get hierarchical tree of places |
-| Get Details | GET | `/place/{placeId}` | Get details of a specific place |
-| Get Groups | GET | `/place/{placeId}/groups` | Get groups for a place |
-| Get Users | GET | `/place/{placeId}/users` | Get users in a place with filtering |
+- **Place ID**: Found in PAL Gate portal URL or settings (format: UUID)
+- **Device ID**: For device operations, found in device settings
 
-### 🖥️ Device Management (6 operations)
+## API Endpoints
 
-| Operation | Method | Endpoint | Description |
-|-----------|--------|----------|-------------|
-| Get Many | GET | `/devices` | Get list of devices with filtering |
-| Get Details | GET | `/device/{serial}` | Get details of a specific device |
-| Get Log | GET | `/device/{serial}/log` | Get log entries for a device |
-| Get Live Status History | GET | `/device/{serial}/live-status-history` | Get live status history for a device |
-| Get Status History V2 | GET | `/device/{serial}/get-status-historyV2` | Get extended status history for a device |
-| Get Users | GET | `/device/{serial}/users` | Get users who recently passed through a device |
+### Verified Working Endpoints
 
-### 🏛️ Organization Management (2 operations)
+```
+Authentication:
+  POST /api1/user/login1
 
-| Operation | Method | Endpoint | Description |
-|-----------|--------|----------|-------------|
-| Get Tree | GET | `/orgs-tree` | Get hierarchical tree of organizations |
-| Get Details | GET | `/org/{orgId}` | Get details of a specific organization |
+Places:
+  GET /api1/places-tree
+  GET /api1/place/{placeId}
 
-### 📊 Dashboard (4 operations)
+Users:
+  GET /api1/place/{placeId}/users
+  POST /api1/place/{placeId}/user
+  DELETE /api1/place/{placeId}/users
 
-| Operation | Method | Endpoint | Description |
-|-----------|--------|----------|-------------|
-| Get Favorites | GET | `/user/admin/favorites` | Get admin user favorites (devices and places) |
-| Get Recent | GET | `/user/admin/recent-devices-places` | Get recent devices and places viewed by admin user |
-| Get Statistics | GET | `/user/dashboard/statistics` | Get dashboard statistics (devices count, places count, users count) |
-| Get Devices Markers | GET | `/devices-markers` | Get device markers for map display (geographic coordinates) |
+Groups:
+  GET /api1/place/{placeId}/groups
 
-### Summary
+Devices:
+  GET /api1/device/{deviceId}
+```
 
-- **Total Operations**: 28 API operations
-- **Resources**: 6 categories (User, Car, Place, Device, Organization, Dashboard)
-- **HTTP Methods**: GET, POST, PUT, DELETE
-- **Base URL**: `https://portal.pal-es.com/api1`
+## Error Handling
 
-## Credentials
+The node includes comprehensive error handling:
 
-The node requires PAL Portal API credentials:
-- **Username**: Your PAL Portal username/email
-- **Password**: Your PAL Portal password
+- **Input Validation**: Phone numbers, required fields, format checks
+- **Clear Error Messages**: Context-aware error messages with helpful hints
+- **API Error Translation**: Converts API errors to user-friendly messages
+- **Status Code Handling**: Specific messages for common HTTP status codes
+
+### Error Message Examples
+
+- **400 Bad Request**: "Bad request. Please check your input parameters."
+- **401 Unauthorized**: "Authentication failed. Please check your credentials."
+- **403 Forbidden**: "Access forbidden. You may not have permission for this operation."
+- **404 Not Found**: "Resource not found. Please verify the resource exists."
+- **409 Conflict**: "Conflict. The resource may already exist."
+- **500+ Server Error**: "Server error. Please try again later or contact support."
+
+## Safety Features
+
+### Delete Operations
+
+Delete operations include multiple safety layers:
+
+1. **Phone Number Validation**: Required, format check, non-empty validation
+2. **Type Handling**: Accepts both string and number types (fixed in v1.0.28)
+3. **Automatic Formatting**: Converts phone numbers to 972XXXXXXXXX format
+4. **Empty Array Prevention**: Prevents sending empty phones arrays
+5. **Detailed Logging**: Full audit trail of all delete operations
+6. **Warning Messages**: Critical warnings about API behavior
+
+✅ **Fixed in v1.0.28**: Delete operation now correctly handles phone numbers passed as numbers (from n8n expressions like `972{{ $json.M_phone }}`).
+
+### Add Operations
+
+- **Phone Validation**: Prevents empty phone numbers (API would generate random IDs)
+- **Required Field Checks**: Validates all required fields before sending
+- **Format Validation**: Ensures data is in correct format
+
+## Usage Examples
+
+### Add a User
+
+1. Select resource: **User**
+2. Select operation: **Add**
+3. Enter Place ID
+4. Enter Phone number (required)
+5. Enter First Name (required)
+6. Enter Last Name (required)
+7. Optionally add Cars
+
+### Get All Users in a Place
+
+1. Select resource: **User**
+2. Select operation: **Find** or **Get Many**
+3. Enter Place ID
+4. Optionally add filter (for Find operation)
+
+### Update a User
+
+1. Select resource: **User**
+2. Select operation: **Update** or **Update By Phone**
+3. Enter Place ID
+4. Enter Phone number
+5. Update desired fields
+
+## Known Limitations
+
+### API Limitations
+
+1. **Vehicle Operations**: Vehicle endpoints return 404. This is an API limitation, not a node issue.
+2. **Delete Operation**: ✅ Fixed in v1.0.28 - now handles both string and number phone formats correctly.
+3. **Empty Phone Numbers**: API accepts empty phone numbers and generates random IDs. Node validates to prevent this.
+
+### Workarounds
+
+- **Vehicles**: Currently not supported by API. May be added in future API updates.
+- **Delete Verification**: Always check user count before and after delete operations.
+
+## Syncing with Postman (EzTest)
+
+If you maintain the PAL Gate API collection in Postman (EzTest workspace), you can keep the node in sync:
+
+1. **Export** the collection from Postman (Collection v2.1) and save as `postman/PalGate-API-Collection.json`.
+2. Run: `node test/compare-postman-to-node.js`  
+   The script reports: endpoints only in Postman (add to node), only in node (review), and matched.
+3. Update the node based on the report (see [docs/POSTMAN_SYNC.md](docs/POSTMAN_SYNC.md)).
+
+You can also pass a path: `node test/compare-postman-to-node.js "path/to/collection.json"`.
+
+## Testing
+
+The node has been tested against the live PAL Gate API:
+
+- **Total Tests**: 17
+- **Passed**: 12 (70.6%)
+- **Failed**: 1 (API issue, node includes protection)
+- **Skipped**: 4 (Features not available in API)
+
+See `test/AUTOMATED_TEST_REPORT.md` for detailed test results.
+
+## Troubleshooting
+
+### Delete Operation Issues
+
+**Error 4101: "Check delete number list"**
+- **Solution:** Update to v1.0.28 or later
+- **Cause:** Phone number type handling (fixed in v1.0.28)
+- **See:** [DELETE_OPERATION.md](docs/DELETE_OPERATION.md) for details
+
+**Other Delete Issues:**
+- Verify phone number format
+- Check n8n execution logs for validation messages
+- Ensure place ID is correct
+
+## Support
+
+### Node Issues
+
+For issues with this n8n node:
+- Open an issue on [GitHub](https://github.com/HirezRa/n8n-nodes-palgate)
+- Check existing issues and documentation
+- See [docs/DELETE_OPERATION.md](docs/DELETE_OPERATION.md) for delete operation details
+
+### API Issues
+
+For PAL Gate API issues:
+- Contact PAL Gate support
+- Check PAL Gate API documentation
+
+## Development
+
+### Building
+
+```bash
+npm run build
+```
+
+### Testing
+
+```bash
+node test/automated-tests.js
+```
+
+### Linting
+
+```bash
+npm run lint
+```
 
 ## License
 
@@ -148,3 +241,29 @@ MIT
 ## Author
 
 PAL Portal Team
+
+## Version
+
+1.0.28
+
+### Recent Updates
+
+**v1.0.28 (2026-01-13)**
+- Fixed delete operation to handle number types (not just strings)
+- Resolved error 4101 "Check delete number list"
+- Improved phone number validation
+
+**v1.0.27 (2026-01-13)**
+- Maintenance release
+
+**v1.0.26 (2026-01-13)**
+- Added automatic phone number formatting for delete operations
+- Handles phone numbers starting with 0 (converts to 972)
+- Handles phone numbers without country code (adds 972 prefix)
+
+**v1.0.25 (2026-01-13)**
+- Fixed delete operation to use correct API format (POST /delete-many-users with userList)
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
