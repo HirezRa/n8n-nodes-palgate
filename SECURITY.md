@@ -6,7 +6,7 @@
 - **Do not commit** real environment identifiers: place IDs, org IDs, device serials, or phone numbers that identify real users/accounts.
 - **Do not commit** Postman/HAR exports that contain live session data (URLs with real IDs, tokens).
 
-Tests and scripts use **environment variables only**. Copy `.env.example` to `.env`, fill in values locally, and never commit `.env`. The repo includes a Cursor rule (`.cursor/rules/security-no-secrets.mdc`) to reinforce this.
+Tests and scripts use **environment variables only**. Copy `.env.example` to `.env`, fill in values locally, and never commit `.env`.
 
 ## If you accidentally pushed secrets
 

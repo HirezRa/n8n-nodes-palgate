@@ -18,6 +18,10 @@ eslint.config.mjs
 docs/
 *.md
 !README.md
+!CHANGELOG.md
+!LICENSE.md
+!SECURITY.md
+!CODE_OF_CONDUCT.md
 
 # CI/CD
 .github/
@@ -25,9 +29,11 @@ docs/
 .travis.yml
 .circleci/
 
-# IDE
+# IDE and local tooling (do not publish to NPM)
 .vscode/
 .idea/
+.cursor/
+*.mdc
 *.swp
 *.swo
 *~

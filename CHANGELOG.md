@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Security: remove Postman links from docs, add postman/ to .npmignore
-- Remove tracked test log files; add .cursor/ to .gitignore
+- Remove tracked test log files; add IDE and local project folders to .gitignore
 
 ## [1.0.31] - 2025-02-04
 
