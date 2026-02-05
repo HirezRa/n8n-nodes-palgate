@@ -163,27 +163,9 @@ Delete operations include multiple safety layers:
 - **Vehicles**: Currently not supported by API. May be added in future API updates.
 - **Delete Verification**: Always check user count before and after delete operations.
 
-## Syncing with a Postman collection
-
-If you maintain a PAL Gate API collection in Postman locally, you can compare it to the node:
-
-1. **Export** the collection from Postman (Collection v2.1) and save as `postman/PalGate-API-Collection.json` (this file is git-ignored; do not commit exports that contain real IDs or tokens).
-2. Run: `node test/compare-postman-to-node.js`  
-   The script reports: endpoints only in Postman (add to node), only in node (review), and matched.
-3. Update the node based on the report (see [docs/POSTMAN_SYNC.md](docs/POSTMAN_SYNC.md)).
-
-You can also pass a path: `node test/compare-postman-to-node.js "path/to/collection.json"`.
-
 ## Testing
 
-The node has been tested against the live PAL Gate API:
-
-- **Total Tests**: 17
-- **Passed**: 12 (70.6%)
-- **Failed**: 1 (API issue, node includes protection)
-- **Skipped**: 4 (Features not available in API)
-
-See `test/AUTOMATED_TEST_REPORT.md` for detailed test results.
+The node has been tested against the live PAL Gate API. Run the test suite locally for detailed results (see Development below).
 
 ## Troubleshooting
 
@@ -192,7 +174,6 @@ See `test/AUTOMATED_TEST_REPORT.md` for detailed test results.
 **Error 4101: "Check delete number list"**
 - **Solution:** Update to v1.0.28 or later
 - **Cause:** Phone number type handling (fixed in v1.0.28)
-- **See:** [DELETE_OPERATION.md](docs/DELETE_OPERATION.md) for details
 
 **Other Delete Issues:**
 - Verify phone number format
@@ -206,7 +187,6 @@ See `test/AUTOMATED_TEST_REPORT.md` for detailed test results.
 For issues with this n8n node:
 - Open an issue on [GitHub](https://github.com/HirezRa/n8n-nodes-palgate)
 - Check existing issues and documentation
-- See [docs/DELETE_OPERATION.md](docs/DELETE_OPERATION.md) for delete operation details
 
 ### API Issues
 
