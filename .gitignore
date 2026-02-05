@@ -1,5 +1,6 @@
 dist
 node_modules
+.cursor/
 
 # Secrets and credentials - NEVER commit
 .env
