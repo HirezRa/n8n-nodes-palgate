@@ -163,11 +163,11 @@ Delete operations include multiple safety layers:
 - **Vehicles**: Currently not supported by API. May be added in future API updates.
 - **Delete Verification**: Always check user count before and after delete operations.
 
-## Syncing with Postman (EzTest)
+## Syncing with a Postman collection
 
-If you maintain the PAL Gate API collection in Postman (EzTest workspace), you can keep the node in sync:
+If you maintain a PAL Gate API collection in Postman locally, you can compare it to the node:
 
-1. **Export** the collection from Postman (Collection v2.1) and save as `postman/PalGate-API-Collection.json`.
+1. **Export** the collection from Postman (Collection v2.1) and save as `postman/PalGate-API-Collection.json` (this file is git-ignored; do not commit exports that contain real IDs or tokens).
 2. Run: `node test/compare-postman-to-node.js`  
    The script reports: endpoints only in Postman (add to node), only in node (review), and matched.
 3. Update the node based on the report (see [docs/POSTMAN_SYNC.md](docs/POSTMAN_SYNC.md)).

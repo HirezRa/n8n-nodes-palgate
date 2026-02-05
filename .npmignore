@@ -35,6 +35,7 @@ docs/
 # Test files and scripts (never publish)
 test/
 tests/
+postman/
 test-api.js
 *.test.ts
 *.test.js

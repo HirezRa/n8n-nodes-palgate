@@ -4,8 +4,7 @@
 
 ## שלב 1: ייצוא הקולקציה מ-Postman
 
-1. פתח את הקולקציה ב-Postman:  
-   [EzTest – PAL Gate API](https://erez-r-9380739.postman.co/workspace/EzTest~58c74e04-b69b-47f7-be94-15a3ceb58678/collection/52096695-66d82603-7e1b-4fa5-a66e-69135747a429)
+1. Open your Postman workspace and the PAL Gate API collection (do not commit or share workspace URLs).
 2. ⋯ (View more actions) → **Export** → **Collection v2.1** → שמור קובץ.
 3. שמור את הקובץ בפרויקט:  
    **`postman/PalGate-API-Collection.json`**  
