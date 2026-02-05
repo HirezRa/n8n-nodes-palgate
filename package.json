@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-palgate",
-	"version": "1.0.32",
+	"version": "1.0.33",
 	"description": "n8n community node for PAL Gate API - manage users, places, devices, and organizations. Delete user operation fully working (v1.0.28+) with automatic phone formatting and type handling.",
 	"license": "MIT",
 	"homepage": "https://github.com/pal-es/n8n-nodes-palgate",
